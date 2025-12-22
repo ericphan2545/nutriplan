@@ -2,7 +2,6 @@
  * Meal Planner - Quản lý lập thực đơn tuần
  * NutriPlan Application
  */
-import "../css/style.css";
 const MealPlanner = {
     // ===== STATE MANAGEMENT =====
     userData: {
@@ -248,7 +247,7 @@ const MealPlanner = {
                 <div class="meal-slots">
                     ${this.meals.map(meal => `
                         <div class="meal-slot ${this.mealPlan[`week${this.currentWeek}`]?.[day]?.[meal] ? 'has-meal' : ''}" 
-                             onclick="MealPlanner.openFoodModal('${day}', '${meal}')"
+                             onclick="openFoodModal('${day}', '${meal}')"
                              data-day="${day}" data-meal="${meal}">
                             <div class="meal-slot-label">${this.mealNames[meal]}</div>
                             ${this.renderMealContent(day, meal)}
@@ -272,7 +271,7 @@ const MealPlanner = {
                         <div class="meal-calories">${mealData.calories} kcal</div>
                     </div>
                 </div>
-                <button class="remove-meal-btn" onclick="event.stopPropagation(); MealPlanner.removeMeal('${day}', '${meal}')">✕</button>
+                <button class="remove-meal-btn" onclick="event.stopPropagation(); removeMeal('${day}', '${meal}')">✕</button>
             `;
         }
         
@@ -334,7 +333,7 @@ const MealPlanner = {
 
             return `
                 <div class="food-item ${isDisabled ? 'disabled' : ''}" 
-                     onclick="${isDisabled ? '' : `MealPlanner.selectFood(${food.id})`}">
+                     onclick="${isDisabled ? '' : `selectFood(${food.id})`}">
                     ${usageCount > 0 ? `<span class="usage-badge">${usageCount}</span>` : ''}
                     <div class="food-item-header">
                         <span class="food-item-emoji">${food.emoji}</span>
