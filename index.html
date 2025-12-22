@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện Món Ăn | Food Library</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body class="bg-pattern">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🍳</div>
+                <h1>Food<span>Library</span></h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="meal-planner.html" class="nav-highlight">🥗 Lập Thực Đơn</a></li>
+                    <li><a href="favorites.html">Yêu Thích</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section class="section container" style="margin-top: 2rem;">
+        <div class="search-container">
+            <div class="search-bar">
+                <div class="search-input-wrapper">
+                    <input type="text" class="search-input" placeholder="Tìm kiếm món ăn theo tên...">
+                </div>
+                <button class="btn btn-primary btn-rounded">Tìm Kiếm</button>
+            </div>
+            <div class="filters">
+                <span class="filter-label">🏷️ Lọc theo:</span>
+                <div class="filter-group">
+                    <button class="filter-btn active">Tất cả</button>
+                    <button class="filter-btn">Món Việt</button>
+                    <button class="filter-btn">Món Á</button>
+                    <button class="filter-btn">Món Âu</button>
+                    <button class="filter-btn">Tráng miệng</button>
+                    <button class="filter-btn">Đồ uống</button>
+                </div>
+                <select class="filter-select">
+                    <option>Độ khó</option>
+                    <option>Dễ</option>
+                    <option>Trung bình</option>
+                    <option>Khó</option>
+                </select>
+                <select class="filter-select">
+                    <option>Thời gian</option>
+                    <option>Dưới 30 phút</option>
+                    <option>30-60 phút</option>
+                    <option>Trên 60 phút</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="section-header">
+            <h2 class="section-title">Khám Phá Món Ăn</h2>
+            <span class="result-count">Hiển thị 8 món ăn</span>
+        </div>
+
+        <div class="grid grid-4">
+            <!-- Food Card 1 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="assets/images/pho.jpg" alt="Phở Bò" class="food-image">
+                    <span class="food-category-badge">Món Việt</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Phở Bò Hà Nội</h3>
+                    <p class="food-description">Món phở truyền thống với nước dùng đậm đà, thịt bò mềm và bánh phở dai ngon.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 90 phút</span>
+                        <span class="food-difficulty">Khó</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+
+            <!-- Food Card 2 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="assets/images/banhmi.jpg" alt="Bánh Mì" class="food-image">
+                    <span class="food-category-badge">Món Việt</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Bánh Mì Thịt Nguội</h3>
+                    <p class="food-description">Bánh mì giòn rụm kẹp thịt nguội, pate và rau thơm đặc trưng Việt Nam.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 20 phút</span>
+                        <span class="food-difficulty">Dễ</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+
+            <!-- Food Card 3 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=400&h=300&fit=crop" alt="Sushi" class="food-image">
+                    <span class="food-category-badge">Món Á</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Sushi Cá Hồi</h3>
+                    <p class="food-description">Sushi tươi ngon với cá hồi béo ngậy, cơm dẻo và wasabi cay nồng.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 45 phút</span>
+                        <span class="food-difficulty">Trung bình</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+
+            <!-- Food Card 4 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop" alt="Pizza" class="food-image">
+                    <span class="food-category-badge">Món Âu</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Pizza Margherita</h3>
+                    <p class="food-description">Pizza Ý truyền thống với sốt cà chua, phô mai mozzarella và lá húng quế.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 60 phút</span>
+                        <span class="food-difficulty">Trung bình</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+
+            <!-- Food Card 5 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop" alt="Chè" class="food-image">
+                    <span class="food-category-badge">Tráng miệng</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Chè Thái</h3>
+                    <p class="food-description">Chè thập cẩm mát lạnh với nước cốt dừa béo ngậy và các loại topping đa dạng.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 30 phút</span>
+                        <span class="food-difficulty">Dễ</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+
+            <!-- Food Card 6 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop" alt="Pad Thai" class="food-image">
+                    <span class="food-category-badge">Món Á</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Pad Thái</h3>
+                    <p class="food-description">Mì xào Thái Lan với tôm, đậu phộng rang và nước sốt chua ngọt đặc trưng.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 35 phút</span>
+                        <span class="food-difficulty">Trung bình</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+
+            <!-- Food Card 7 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop" alt="Steak" class="food-image">
+                    <span class="food-category-badge">Món Âu</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Bò Bít Tết</h3>
+                    <p class="food-description">Thịt bò áp chảo hoàn hảo với khoai tây nghiền và sốt tiêu đen.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 40 phút</span>
+                        <span class="food-difficulty">Khó</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+
+            <!-- Food Card 8 -->
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop" alt="Trà Sữa" class="food-image">
+                    <span class="food-category-badge">Đồ uống</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">Trà Sữa Trân Châu</h3>
+                    <p class="food-description">Trà sữa thơm ngon với trân châu đường đen dai giòn hấp dẫn.</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ 25 phút</span>
+                        <span class="food-difficulty">Dễ</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🍳 FoodLibrary</h3>
+                <p>Khám phá hàng ngàn công thức nấu ăn từ khắp nơi trên thế giới. Nấu ăn ngon mỗi ngày cùng chúng tôi!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Danh Mục</h3>
+                <a href="#">Món Việt Nam</a>
+                <a href="#">Món Châu Á</a>
+                <a href="#">Món Châu Âu</a>
+                <a href="#">Tráng Miệng</a>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết</h3>
+                <a href="#">Về Chúng Tôi</a>
+                <a href="#">Liên Hệ</a>
+                <a href="#">Chính Sách</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Hệ</h3>
+                <p>📧 contact@foodlibrary.vn</p>
+                <p>📞 0123 456 789</p>
+                <p>📍 Hà Nội, Việt Nam</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 FoodLibrary. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="icon-light">🌙</span>
+        <span class="icon-dark">☀️</span>
+    </button>
+
+    <!-- JavaScript Files -->
+    <script type="module" src="js/theme.js"></script>
+    <script type="module" src="js/food-library.js"></script>
+</body>
+</html>
