@@ -1,7 +1,7 @@
 /**
  * Food Library - Quản lý trang thư viện món ăn
  */
-
+import "../css/style.css";
 const FoodLibrary = {
     // DOM Elements
     elements: {
