@@ -78,25 +78,34 @@ const FoodLibrary = {
     bindFavoriteButtons() {
         const { favoriteBtns } = this.elements;
         
-        favoriteBtns.forEach(btn => {
+        favoriteBtns.forEach((btn, index) => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                this.toggleFavorite(btn);
+                this.toggleFavorite(btn, index + 1); // Food ID is 1-8 based on card position
             });
         });
     },
 
     // Toggle trạng thái favorite
-    toggleFavorite(btn) {
+    toggleFavorite(btn, foodId) {
         const isActive = btn.classList.contains('favorited');
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         
         if (isActive) {
             btn.classList.remove('favorited');
             btn.style.background = 'var(--white)';
+            // Remove from favorites
+            favorites = favorites.filter(id => id !== foodId);
         } else {
             btn.classList.add('favorited');
             btn.style.background = '#ff6b6b';
+            // Add to favorites
+            if (!favorites.includes(foodId)) {
+                favorites.push(foodId);
+            }
         }
+        
+        localStorage.setItem('favorites', JSON.stringify(favorites));
     },
 
     // Xử lý search
