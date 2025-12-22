@@ -2,7 +2,7 @@
  * Theme Manager - Quản lý Dark/Light Mode
  * Được sử dụng chung cho tất cả các trang
  */
-
+import "../css/style.css";
 const ThemeManager = {
     // Khởi tạo theme
     init() {

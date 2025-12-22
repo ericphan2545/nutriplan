@@ -2,7 +2,7 @@
  * Meal Planner - Quản lý lập thực đơn tuần
  * NutriPlan Application
  */
-
+import "../css/style.css";
 const MealPlanner = {
     // ===== STATE MANAGEMENT =====
     userData: {
