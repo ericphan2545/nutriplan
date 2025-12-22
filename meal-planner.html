@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriPlan | Kế Hoạch Dinh Dưỡng Thông Minh</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Libre+Baskerville:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/meal-planner.css" />
+  </head>
+  <body>
+    <div class="bg-pattern"></div>
+
+    <div class="main-container">
+      <!-- Sidebar with BMI Calculator -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <a href="index.html" class="logo" style="text-decoration: none">
+            <div class="logo-icon">🥗</div>
+            <h1>Nutri<span>Plan</span></h1>
+          </a>
+          <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">📚 Thư viện món ăn</a>
+          </nav>
+        </div>
+
+        <div class="bmi-form-section">
+          <div class="form-title">📊 Thông tin cơ thể</div>
+
+          <!-- Gender Selection -->
+          <div class="form-group">
+            <label class="form-label">Giới tính</label>
+            <div class="gender-options">
+              <div
+                class="gender-option"
+                data-gender="male"
+                onclick="selectGender('male')"
+              >
+                <div class="icon">👨</div>
+                <div class="label">Nam</div>
+              </div>
+              <div
+                class="gender-option"
+                data-gender="female"
+                onclick="selectGender('female')"
+              >
+                <div class="icon">👩</div>
+                <div class="label">Nữ</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Age -->
+          <div class="form-group">
+            <label class="form-label">Tuổi</label>
+            <div class="input-wrapper">
+              <input
+                type="number"
+                class="input-field"
+                id="age"
+                placeholder="25"
+                min="10"
+                max="100"
+              />
+              <span class="input-unit">tuổi</span>
+            </div>
+          </div>
+
+          <!-- Height -->
+          <div class="form-group">
+            <label class="form-label">Chiều cao</label>
+            <div class="input-wrapper">
+              <input
+                type="number"
+                class="input-field"
+                id="height"
+                placeholder="170"
+                min="100"
+                max="250"
+              />
+              <span class="input-unit">cm</span>
+            </div>
+          </div>
+
+          <!-- Weight -->
+          <div class="form-group">
+            <label class="form-label">Cân nặng</label>
+            <div class="input-wrapper">
+              <input
+                type="number"
+                class="input-field"
+                id="weight"
+                placeholder="65"
+                min="30"
+                max="300"
+              />
+              <span class="input-unit">kg</span>
+            </div>
+          </div>
+
+          <!-- Activity Level -->
+          <div class="form-group">
+            <label class="form-label">Mức độ vận động</label>
+            <div class="activity-options">
+              <div
+                class="activity-option"
+                data-level="sedentary"
+                onclick="selectActivity('sedentary')"
+              >
+                <div class="radio"></div>
+                <span class="text">Ít vận động</span>
+              </div>
+              <div
+                class="activity-option"
+                data-level="light"
+                onclick="selectActivity('light')"
+              >
+                <div class="radio"></div>
+                <span class="text">Vận động nhẹ</span>
+              </div>
+              <div
+                class="activity-option"
+                data-level="moderate"
+                onclick="selectActivity('moderate')"
+              >
+                <div class="radio"></div>
+                <span class="text">Vận động vừa</span>
+              </div>
+              <div
+                class="activity-option"
+                data-level="active"
+                onclick="selectActivity('active')"
+              >
+                <div class="radio"></div>
+                <span class="text">Vận động nhiều</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="calculate-btn" onclick="calculateBMI()">
+            <span>✨</span>
+            Tính toán & Lên thực đơn
+          </button>
+
+          <!-- BMI Result -->
+          <div class="bmi-result-card" id="bmiResult">
+            <div class="bmi-value-display">
+              <div class="bmi-number" id="bmiNumber">--</div>
+              <div class="bmi-status-text" id="bmiStatus">Chỉ số BMI</div>
+            </div>
+            <div class="bmi-scale-bar">
+              <div class="bmi-scale-pointer" id="bmiPointer"></div>
+            </div>
+            <div class="calories-info">
+              <div class="calorie-item">
+                <div class="value" id="tdeeValue">--</div>
+                <div class="label">TDEE</div>
+              </div>
+              <div class="calorie-item">
+                <div class="value" id="targetCalories">--</div>
+                <div class="label">Mục tiêu</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="content-area">
+        <div class="content-header">
+          <h2 class="page-title">🗓️ Thực Đơn Tuần</h2>
+          <div class="week-navigation">
+            <button class="week-nav-btn" onclick="previousWeek()">◀</button>
+            <span class="current-week" id="currentWeek">Tuần 1</span>
+            <button class="week-nav-btn" onclick="nextWeek()">▶</button>
+          </div>
+        </div>
+
+        <!-- Nutrition Warning -->
+        <div class="nutrition-warning hidden" id="nutritionWarning">
+          <span class="warning-icon">⚠️</span>
+          <span class="warning-text" id="warningText"
+            >Thực đơn chưa cân bằng dinh dưỡng!</span
+          >
+        </div>
+
+        <!-- Nutrition Summary -->
+        <div class="nutrition-summary">
+          <div class="nutrition-card">
+            <div class="nutrition-icon carbs">🍚</div>
+            <div class="nutrition-info">
+              <h4>Carbohydrate</h4>
+              <span class="value" id="totalCarbs">0</span>
+              <span class="unit">g/ngày</span>
+            </div>
+          </div>
+          <div class="nutrition-card">
+            <div class="nutrition-icon protein">🥩</div>
+            <div class="nutrition-info">
+              <h4>Protein</h4>
+              <span class="value" id="totalProtein">0</span>
+              <span class="unit">g/ngày</span>
+            </div>
+          </div>
+          <div class="nutrition-card">
+            <div class="nutrition-icon fat">🥑</div>
+            <div class="nutrition-info">
+              <h4>Chất béo</h4>
+              <span class="value" id="totalFat">0</span>
+              <span class="unit">g/ngày</span>
+            </div>
+          </div>
+          <div class="nutrition-card">
+            <div class="nutrition-icon fiber">🥬</div>
+            <div class="nutrition-info">
+              <h4>Chất xơ</h4>
+              <span class="value" id="totalFiber">0</span>
+              <span class="unit">g/ngày</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Calendar -->
+        <div class="weekly-calendar">
+          <div class="calendar-header">
+            <h3 class="calendar-title">Lịch ăn trong tuần</h3>
+            <button class="auto-generate-btn" onclick="autoGenerateMeals()">
+              <span>🤖</span>
+              AI Tự động đề xuất
+            </button>
+          </div>
+
+          <div class="days-grid" id="daysGrid">
+            <!-- Will be generated by JavaScript -->
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Food Selection Modal -->
+    <div class="modal-overlay" id="foodModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">Chọn món ăn - Bữa sáng</h3>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="food-filter-tabs">
+            <button class="filter-tab active" onclick="filterFood('all')">
+              Tất cả
+            </button>
+            <button class="filter-tab" onclick="filterFood('carbs')">
+              Tinh bột
+            </button>
+            <button class="filter-tab" onclick="filterFood('protein')">
+              Đạm
+            </button>
+            <button class="filter-tab" onclick="filterFood('fat')">
+              Chất béo
+            </button>
+            <button class="filter-tab" onclick="filterFood('fiber')">
+              Chất xơ
+            </button>
+            <button class="filter-tab" onclick="filterFood('balanced')">
+              Cân bằng
+            </button>
+          </div>
+          <div class="food-grid" id="foodGrid">
+            <!-- Will be generated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button
+      class="theme-toggle"
+      onclick="toggleTheme()"
+      aria-label="Toggle theme"
+    >
+      <span class="icon-light">🌙</span>
+      <span class="icon-dark">☀️</span>
+    </button>
+
+    <!-- JavaScript Files -->
+    <script src="js/theme.js"></script>
+    <script src="js/food-database.js"></script>
+    <script src="js/meal-planner.js"></script>
+  </body>
+</html>
