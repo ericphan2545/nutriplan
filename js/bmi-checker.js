@@ -1,7 +1,7 @@
 /**
  * BMI Checker - Quản lý trang kiểm tra BMI
  */
-
+import "../css/style.css";
 const BMIChecker = {
     // User data
     userData: {

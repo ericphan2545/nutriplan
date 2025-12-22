@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yêu Thích | Food Library</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body class="bg-pattern">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🍳</div>
+                <h1>Food<span>Library</span></h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="meal-planner.html" class="nav-highlight">🥗 Lập Thực Đơn</a></li>
+                    <li><a href="favorites.html">Yêu Thích</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="section-header" style="margin-top: 2rem;">
+            <h2 class="section-title">❤️ Món Ăn Yêu Thích</h2>
+            <span class="result-count" id="favoriteCount">Chưa có món ăn nào được yêu thích</span>
+        </div>
+
+        <div class="grid grid-4" id="favoritesGrid">
+            <!-- Favorites will be loaded here by JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" style="text-align: center; padding: 4rem 2rem; display: none;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">💔</div>
+            <h3 style="color: var(--text-dark); margin-bottom: 0.5rem;">Chưa có món ăn yêu thích</h3>
+            <p style="color: var(--gray-text); margin-bottom: 1.5rem;">Hãy quay lại trang chủ để thêm một số món ăn yêu thích!</p>
+            <a href="index.html" class="btn btn-primary btn-rounded">Quay Lại Trang Chủ</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🍳 FoodLibrary</h3>
+                <p>Khám phá hàng ngàn công thức nấu ăn từ khắp nơi trên thế giới. Nấu ăn ngon mỗi ngày cùng chúng tôi!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Danh Mục</h3>
+                <a href="#">Món Việt Nam</a>
+                <a href="#">Món Châu Á</a>
+                <a href="#">Món Châu Âu</a>
+                <a href="#">Tráng Miệng</a>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết</h3>
+                <a href="#">Về Chúng Tôi</a>
+                <a href="#">Liên Hệ</a>
+                <a href="#">Chính Sách</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Hệ</h3>
+                <p>📧 contact@foodlibrary.vn</p>
+                <p>📞 0123 456 789</p>
+                <p>📍 Hà Nội, Việt Nam</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 FoodLibrary. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="icon-light">🌙</span>
+        <span class="icon-dark">☀️</span>
+    </button>
+
+    <!-- JavaScript Files -->
+    <script type="module" src="js/theme.js"></script>
+    <script src="js/favorites.js"></script>
+</body>
+</html>
