@@ -1,0 +1,553 @@
+﻿Lab 4. Tutorial Build Simple Portfolio Website
+
+
+Các em mở lại Git repo trước đây triển khai Github Page (Lab 1), chúng ta sẽ làm tiếp vào đó
+
+
+
+
+Về cơ bản, sau khi hoàn tất bài này, chúng ta sẽ có cấu trúc thư mục như sau
+  
+
+
+
+
+
+________________
+
+
+Part 1. Cài đặt NPM Package, Tailwind CSS và Vite
+
+
+NPM viết tắt của "Node Package Manager", là trình quản lý gói cho các ứng dụng JavaScript và Node.js.
+
+
+ 
+
+
+Các em sẽ được học kỹ về các công cụ này ở phần tiếp theo của khoá học, ở bài này cứ cài đặt và hình dung được cách sử dụng là được.
+	
+
+Đầu tiên tạo file .gitignore (để ý dấu chấm đầu tên, đây gọi là Dot File). Với nội dung như sau 
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+
+node_modules
+dist
+dist-ssr
+*.local
+
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+	
+
+Mục đích là để tránh commit nhầm những file thư viện sau này khi cài đặt NPM Packages
+
+
+Tiếp theo, mở Terminal và chạy lệnh sau 
+npm init
+	Lệnh này để khởi tạo file package.json để quản lý các thư viện cần thiết. Khi chạy lệnh, sẽ hỏi nhập thông tin, các bạn nhập tuỳ theo ý mình.
+
+
+
+
+
+
+Tiếp theo cài đặt các thư viện cần thiết, chạy lệnh sau vào Terminal
+npm install -D tailwindcss @tailwindcss/postcss postcss autoprefixer vite
+	
+
+Tạo file postcss.config.js với nội dung sau 
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
+    autoprefixer: {},
+  },
+}
+	
+
+Tạo file tailwind.config.js với nội dung sau
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+	
+
+Tiếp theo, mở file package.json lên. 
+
+
+Đầu tiên, thay thế propeties scripts bằng đoạn sau 
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+	
+
+Sau đó thêm dòng sau, dưới propeties name 
+"type": "module",
+	Mục đích là thiết lập các lệnh để chạy trong quá trình phát triển dự án
+
+
+Tới đây thử chạy lệnh sau: 
+npm run dev
+	
+
+Sẽ được kết quả như sau
+  
+
+
+
+Lúc này thử mở trình duyệt lên và truy cập vào http://localhost:5174
+sẽ thấy được trang của bạn
+
+
+Tới đây có thể commit code lại, với message là “Setup NPM and Vite”
+
+
+________________
+
+
+Part 2. Cấu hình để sử dụng Tailwind CSS
+
+
+Tạo file src/css/style.css với nội dung sau 
+@import "tailwindcss";
+
+
+html {
+    scroll-behavior: smooth;
+}
+	Mục đích là để import các file thư viện của Tailwind CSS
+
+
+Tạo file src/scripts/application.js với nội dung như sau 
+import '../css/style.css'
+
+
+	Mục đích là để load file CSS vào ứng dụng thông qua Javascript
+Mở file index.html lên rồi thêm đoạn mã dưới đây vào tận cùng thẻ body ( tức phía trên thẻ đóng của body)
+… more code …
+
+
+   <script type="module" src="/src/scripts/application.js"></script>
+</body>
+</html>
+	
+
+Tới đây, Kill Process npm run dev trước đây và chạy lại 
+
+
+Mở File index.html lên, thử chèn đoạn mã sau vào trong thẻ body và lưu lại 
+    <div class="flex flex-row justify-center items-center p-12">
+      <h1 class="text-5xl text-green-300 animate-bounce">Hello, Tailwind CSS</h1>
+    </div>
+	Lúc này bạn sẽ thấy màn hình tự động nạp code và reload lại ( cái này gọi là Hot Reload), và nếu nhìn thấy như dưới hình là đã thành công cài đặt Tailwind CSS vào Project
+  
+________________
+
+Part 3. Build an Portfolio Landing Page 
+Chúng ta sẽ build một trang Landing Page giống như thế này. Hỗ trợ Responsive cho Mobile bằng Tailwind CSS.
+  
+
+Bọn em thử nhìn theo Design rồi code thử bằng HTML và Tailwind xem. 
+
+
+Trong quá trình làm cho phiên bản Mobile hãy sử dụng Responsive Tool của Chorme nhé.
+  
+
+
+
+________________
+
+
+Đây là code mẫu của anh, bọn em nên tự code trước rồi xem code mẫu sau 
+
+
+1) Code phần Banner
+    <!-- banner -->
+    <section
+      class="min-h-screen w-full flex flex-col justify-center items-center bg-[url('/banner.avif')] bg-cover bg-center">
+      <div class="w-full lg:w-[80%] p-12 text-gray-800">
+        <h1 class="text-6xl font-bold mb-10 grid grid-col-1 lg:gap-5">
+          <span>Hi, my name is <span class="text-teal-400">Quyen Nguyen Huu</span></span>
+          <span class="text-gray-800">I'm the Web Developer.</span>
+        </h1>
+
+
+        <a href="#about-me" class="uppercase border-2 border-teal-400 p-3 hover:bg-teal-400 hover:text-white transition-colors cursor-pointer">
+          <span class="text-xl pl-8 pr-8 pt-3 pb-3 font-light focus:outline-none focus:ring focus:ring-teal-300">Know more</span>
+        </a>
+      </div>
+    </section>
+    <!-- banner ./ -->
+	
+
+2) Code phần About Me
+    <!-- about me -->
+    <section id="about-me" class="bg-teal-400 min-h-screen w-full flex flex-col justify-center items-center p-4 lg:p-12 text-white">
+      <div class="w-full lg:w-[60%] mb-5">
+        <h2 class="uppercase text-2xl lg:text-5xl text-center font-bold text-white mb-12">About Me</h2>
+        <div class="grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-3">
+          <div class="flex justify-center items-center text-center col-span-1">
+            <img class="object-cover max-w-xs lg:w-auto" src="https://nguyenhuuquyen.com/imgs/avatar.png" title="My avatar"
+            alt="My avatar" />
+          </div>
+          <div class="col-span-1 lg:col-span-2 flex justify-center items-center">
+            <div class="p-0 text-center lg:p-8 lg:text-start">
+              <p class="pb-3 text-lg font-light mb-5">
+                I love programming, application development, and research software architecture. My career
+                objective is to become a Senior Software Engineer who masters software architecture, design
+                principles, and modern development technologies.
+              </p>
+              <a href="https://drive.google.com/file/d/1rrqhPdD-moRjUvEqm7f_e6NvI_2hLhV_"
+                target="_blank"
+                class="uppercase border-2 border-white p-3 text-white hover:bg-white hover:text-teal-400 transition-colors cursor-pointer">
+                <span class="text-xl pl-8 pr-8 pt-3 pb-3 font-normal focus:outline-none focus:ring focus:ring-teal-300">View My CV</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- about me ./ -->
+	
+
+4) Code phần Contact
+   <!-- contact -->
+    <section id="contact" class="bg-white min-h-[500px] w-full flex flex-col justify-center items-center p-6 lg:p-12 text-gray-800">
+      <div class="w-full lg:w-[60%] mb-5">
+        <h2 class="uppercase text-2xl lg:text-5xl text-center font-bold mb-6">Contact</h2>
+        <p class="flex flex-col justify-center items-center pt-5 pb-5 text-center">
+          <span class="text-2xl text-teal-500 mb-3">I LOOK FORWARD TO WORKING WITH YOU</span>
+          <span>I'm so happy that my skills might bring values to you. Let's connect for work</span>
+        </p>
+      </div>
+      <a href="mailto: nghuuquyen@gmail.com?subject=Hi, Quyen I want to connect with you for work !!!&body=Please describe your work or projects requirements"
+        class="border-2 border-teal-400 pl-8 pr-8 pt-3 pb-3 bg-teal-400 text-white hover:bg-white hover:text-teal-400 transition-colors cursor-pointer">
+        <span class="text-xl uppercase font-light focus:outline-none focus:ring focus:ring-teal-300">Send An Email Now</span>
+      </a>
+    </section>
+    <!-- contact ./ -->
+	
+
+
+
+5) Code phần Footer 
+  <!-- footer -->
+  <footer class="bg-neutral-900 min-h-[300px] pt-12 pb-12 flex flex-row justify-center items-center">
+    <div class="w-[60%] flex flex-col justify-center items-center">
+      <ul class="flex flex-row">
+        <li class="pl-4 pr-4 cursor-pointer hover:-translate-y-2">
+          <a href="https://twitter.com/nghuuquyen" target="_blank">
+            <img class="w-10 grayscale hover:grayscale-0" src="/imgs/twitter.svg" />
+          </a>
+        </li>
+        <li class="pl-4 pr-4 cursor-pointer hover:-translate-y-2">
+          <a href="https://www.linkedin.com/in/nghuuquyen" target="_blank">
+            <img class="w-10 grayscale hover:grayscale-0" src="/imgs/linkedin.svg" />
+          </a>
+        </li>
+        <li class="pl-4 pr-4 cursor-pointer hover:-translate-y-2">
+          <a href="https://github.com/nghuuquyen" target="_blank">
+            <img class="w-10 grayscale hover:grayscale-0" src="/imgs/github.svg" />
+          </a>
+        </li>
+      </ul>
+
+
+      <hr class="w-1/2 border-gray-500 mt-10"/>
+      <p class="text-lg text-gray-500 mt-5">©2023 - Quyen Nguyen Huu</p>
+    </div>
+  </footer>
+  <!-- footer ./ -->
+	
+
+Mấy cái Logo của Twitter, Linkedin và Github có thể lấy ở iconfinder hoặc tải ở link này https://github.com/nghuuquyen/nghuuquyen.github.io/tree/main/public/imgs
+
+
+Part 4. Thêm các thẻ Metadata và tạo Favicon cho trang 
+
+
+Các thẻ Metadata là để khi em copy link gửi cho bạn bè hoặc submit lên Google Index có thể đọc được Title, mô tả và hình ảnh từ Site của các em 
+  
+
+Ví dụ sau khi anh làm bước này, anh share URL web lên Zalo sẽ hiển thị được như trên hình.
+
+
+Có thể sử dụng ứng dụng sau để tạo metatags
+https://www.seoptimer.com/meta-tag-generator
+
+
+( nhớ sửa lại theo thông tin của mình nhé )
+<meta name="title" content="Quyen's Site">
+<meta name="description" content="Hi, my name is Quyen Nguyen. I'm the Web Developer.">
+<meta name="keywords" content="web, fullstack developer">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="English">
+<meta name="author" content="Quyen Nguyen Huu">
+	
+
+chèn thẻ này vào trong thẻ head của file index.hml
+
+
+Tiếp theo là thiết lập thêm các thẻ meta theo chuẩn Open Graph protocol để có thể chia sẽ lên mạng xã hội như Google, Facebook hay Twitter
+https://css-tricks.com/essential-meta-tags-social-media/
+
+
+thường thì sẽ như sau ( nhớ sửa lại theo thông tin của mình nhé )
+  <meta property="og:title" content="Quyen's Site" />
+  <meta property="og:url" content="/" />
+  <meta property="og:image" content="/banner.avif" />
+
+
+  <meta name="twitter:title" content="Quyen's Site">
+  <meta name="twitter:description" content="Hi, my name is Quyen Nguyen. I'm the Web Developer.">
+  <meta name="twitter:image" content="/banner.avif">
+  <meta name="twitter:card" content="Quyen's Site">
+	
+
+Cuối cùng là tạo Favicon cho Website, là cái icon nhỏ trên Tab của trình duyệt. 
+Có thể sử dụng ứng dụng này để tạo Favicon https://favicon.io/
+
+
+  
+
+
+
+Sau khi tạo xong, tụi em tải file về rồi giải nén hết file vào folder public và update metatag theo hướng dẫn từ trang web là được.
+  
+
+File tải về sẽ có nội dung như sau, hãy copy bỏ hết vào public folder nhé.
+  
+
+(Mấy file ngoài favicon.ico là sử dụng để làm icon trên Mobile khi tụi em sử dụng tính năng Add to Home Screen ấy)
+
+
+
+
+________________
+
+
+Part 5. Cập nhật lại Workflow code để deploy Landing Page bằng Github Action
+
+
+Mở file .github/workflows/static.yml lên và sửa lại nội dung như sau 
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+	
+
+Về cơ bản là thêm một bước build project bằng vite và upload folder dist lên Github Page 
+
+
+Xong rồi, chờ Github Action chạy xong, ra kiểm trang Github Page thôi.
+
+
+Done!!
+
+
+Tới đây cơ bản là xong rồi, các em có thể làm thêm các phần sau 
+
+
+
+
+________________
+
+
+Part 6. Tạo hiệu ứng hiển thị dần dần khi cuộn trang
+Để làm cái này các em cần cài thư viện scrollreveal bằng lệnh sau 
+npm install scrollreveal --save
+	
+
+sau đó tạo file src/scripts/scroll-reveal.js với nội dung như sau:
+import ScrollReveal from 'scrollreveal'
+
+
+export default function initScrollReveal(defaultProps = null) {
+    const targetElements = [
+        {
+            element: ".banner-text",
+            animation: {
+                delay: 700,
+                origin: window.innerWidth > 768 ? "left" : "bottom",
+            },
+        },
+        {
+            element: ".banner-cta",
+            animation: {
+                delay: 1000,
+                origin: window.innerWidth > 768 ? "left" : "bottom",
+            },
+        },
+        {
+            element: ".section-title",
+            animation: {
+                delay: 300,
+                distance: "0px",
+                origin: "bottom",
+            },
+        },
+        {
+            element: ".section-content",
+            animation: {
+                delay: 500,
+                distance: "0px",
+                origin: "bottom",
+            },
+        },
+    ];
+    
+    ScrollReveal({ reset: false });
+    
+    targetElements.forEach(({ element, animation }) => {
+        ScrollReveal().reveal(element, Object.assign({}, defaultProps, animation));
+    });
+}
+	
+
+Mở file src/scripts/application.js và sửa lại nội dung như thế này 
+import '../css/style.css'
+import initScrollReveal from './scroll-reveal';
+
+
+initScrollReveal();
+	Tới đây các em có thể chèn class banner-text, banner-cta, section-title, section-content vào các thẻ HTML tương ứng, thì hiệu ứng sẽ được hiển thị 
+Ví dụ: code của banner thêm vào như thế này ( màu đỏ là thêm vào )
+    <!-- banner -->
+    <section
+      class="min-h-screen w-full flex flex-col justify-center items-center bg-[url('/banner.avif')] bg-cover bg-center">
+      <div class="w-full lg:w-[80%] p-12 text-gray-800">
+        <h1 class="text-6xl font-bold mb-10 grid grid-col-1 lg:gap-5">
+          <span class="banner-text">Hi, my name is <span class="text-teal-400">Quyen Nguyen Huu</span></span>
+          <span class="text-gray-800 banner-text">I'm the Web Developer.</span>
+        </h1>
+
+
+        <a href="#about-me" class="banner-cta uppercase border-2 border-teal-400 p-3 hover:bg-teal-400 hover:text-white transition-colors cursor-pointer">
+          <span class="text-xl pl-8 pr-8 pt-3 pb-3 font-light focus:outline-none focus:ring focus:ring-teal-300">Know more</span>
+        </a>
+      </div>
+    </section>
+    <!-- banner ./ -->
+	
+
+thì các em sẽ thấy hiệu ứng xảy ra, làm tương tự cho phần section title và section body.
+________________
+Phần mở rộng. Đến đây các em hãy tự mình chỉnh sửa và thêm thông tin chi tiết hơn vào trang web này. Các em có thể Vibe Coding bằng cách ra lệnh cho ChatGPT / Gemini. Về phần thông tin cần bổ sung, các em có thể dùng Template Sau:
+
+
+1. Basic Info
+* Your name (and how you want it displayed)
+* Tagline or short bio (e.g. "Frontend Developer & UI Designer")
+* Profile picture (optional, can be added later)
+
+2. Sections to Include
+Let me know which sections you want. Here are some common ones:
+   * About Me
+   * Projects / Portfolio
+   * Skills / Tech Stack
+   * Experience
+   * Education
+   * Testimonials / Recommendations
+   * Contact Form or Info
+   * Resume download link
+
+3. Design Style & Preferences
+      * Preferred colors or themes (light/dark, minimalist, vibrant, etc.)
+      * Any layout inspirations or sites you like?
+      * Do you want it to be single page or multi-page?
+
+4. Project Showcase Info
+For each project you want to feature:
+      * Title
+      * Short description
+      * Tech used
+      * Live link (if available)
+      * GitHub link (if any)
+      * Screenshot or image (optional)
+
+
+ 5. Contact Info
+      * Email
+      * Social links (GitHub, LinkedIn, Twitter, etc.)
+      * Any contact form or just links?
