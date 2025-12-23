@@ -69,22 +69,13 @@ const Favorites = {
                         <span class="food-time">⏱️ ${food.time}</span>
                         <span class="food-difficulty">${food.difficulty}</span>
                     </div>
-<<<<<<< HEAD
-                    <button class="view-recipe-btn" onclick="RecipeManager.openModal('${food.name}')">Xem Công Thức</button>
-=======
                     <button class="view-recipe-btn">Xem Công Thức</button>
->>>>>>> 9fb01a2cd61f8d64c56f4a97a5636e4bd78025df
                 </div>
             </article>
         `).join('');
     }
 };
 
-<<<<<<< HEAD
-window.Favorites = Favorites;
-
-=======
->>>>>>> 9fb01a2cd61f8d64c56f4a97a5636e4bd78025df
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     Favorites.init();

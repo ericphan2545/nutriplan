@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 /**
  * Food Library - Quản lý trang thư viện món ăn
  */
 import "../css/style.css";
->>>>>>> 9fb01a2cd61f8d64c56f4a97a5636e4bd78025df
 const FoodLibrary = {
     // DOM Elements
     elements: {

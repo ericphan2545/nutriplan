@@ -1,17 +1,6 @@
-<<<<<<< HEAD
-/**
- * recipes.js - Quản lý dữ liệu và hiển thị công thức
- */
-
-// 1. Tạo một Object quản lý recipe và gán vào window để dùng ở mọi nơi
-window.RecipeManager = {
-    // CƠ SỞ DỮ LIỆU CÔNG THỨC
-   recipesDB = {
-=======
 document.addEventListener('DOMContentLoaded', () => {
     // 1. CƠ SỞ DỮ LIỆU CÔNG THỨC (CẬP NHẬT ĐẦY ĐỦ 52 MÓN)
     const recipesDB = {
->>>>>>> 9fb01a2cd61f8d64c56f4a97a5636e4bd78025df
         "Cơm gà Hội An": {
             image: "https://sf-static.upanhlaylink.com/img/image_20251211bb8eaa78a49193e39bf1374969bb2713.jpg",
             ingredients: ["1 bát gạo", "150g ức gà", "Rau thơm, hành", "Nghệ tươi", "Nước mắm, tiêu"],
@@ -272,37 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ingredients: ["400g thịt heo xay", "Mỡ heo, tỏi", "Bánh tráng, bún", "Rau sống, dưa leo", "Nước chấm đặc biệt"],
             instructions: ["Xay thịt với mỡ, tỏi và gia vị", "Vo viên hoặc xiên que", "Nướng trên than hoa đến vàng", "Cuốn nem với bánh tráng, bún, rau", "Chấm nước mắm pha đặc biệt"]
         }
-<<<<<<< HEAD
-    },
-
-    // Hàm khởi tạo sự kiện (Dùng cho trang chủ index.html)
-    init() {
-        this.bindEvents();
-        this.setupModalClose();
-    },
-
-    // Hàm mở Modal (Hàm này giờ có thể gọi từ bất cứ đâu)
-    openModal(foodName) {
-        const modal = document.getElementById("recipe-modal");
-        const modalBody = document.getElementById("modal-body-content");
-        
-        // Nếu trang hiện tại không có modal HTML thì không chạy
-        if (!modal || !modalBody) return;
-
-        // Tìm công thức trong DB (Thử tìm chính xác hoặc tìm gần đúng)
-        let recipe = this.recipesDB[foodName];
-
-        // Fallback: Nếu không tìm thấy key chính xác, thử tìm trong recipesDB xem có món nào tên trùng khớp không
-        if (!recipe) {
-             const key = Object.keys(this.recipesDB).find(k => k.toLowerCase() === foodName.toLowerCase());
-             if(key) recipe = this.recipesDB[key];
-        }
-
-        if (recipe) {
-            let ingredientsHtml = recipe.ingredients.map(item => `<li>${item}</li>`).join('');
-            let instructionsHtml = recipe.instructions.map(step => `<li>${step}</li>`).join('');
-
-=======
     };
     
     // 2. CÁC BIẾN DOM
@@ -321,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let instructionsHtml = recipe.instructions.map(step => `<li>${step}</li>`).join('');
 
             // Chèn vào Modal
->>>>>>> 9fb01a2cd61f8d64c56f4a97a5636e4bd78025df
             modalBody.innerHTML = `
                 <div class="recipe-header">
                     <img src="${recipe.image}" alt="${foodName}" class="recipe-image-large">
@@ -339,62 +296,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             
-<<<<<<< HEAD
-            modal.style.display = "block";
-=======
             // Hiển thị Modal
             modal.style.display = "block";
             // Khóa cuộn trang web chính lại
->>>>>>> 9fb01a2cd61f8d64c56f4a97a5636e4bd78025df
             document.body.style.overflow = "hidden";
         } else {
             alert("Công thức cho món '" + foodName + "' đang được cập nhật!");
         }
-<<<<<<< HEAD
-    },
-
-    // Xử lý sự kiện đóng modal
-    setupModalClose() {
-        const modal = document.getElementById("recipe-modal");
-        const closeBtn = document.querySelector(".close-modal");
-
-        if (closeBtn) {
-            closeBtn.addEventListener("click", () => {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
-            });
-        }
-
-        if (modal) {
-            window.addEventListener("click", (e) => {
-                if (e.target == modal) {
-                    modal.style.display = "none";
-                    document.body.style.overflow = "auto";
-                }
-            });
-        }
-    },
-
-    // Gán sự kiện cho các nút tĩnh (trên trang index.html)
-    bindEvents() {
-        const viewButtons = document.querySelectorAll(".view-recipe-btn");
-        viewButtons.forEach(btn => {
-            // Chỉ gán sự kiện nếu nút chưa có onclick inline (tránh trùng lặp)
-            if (!btn.hasAttribute('onclick')) {
-                btn.addEventListener("click", (e) => {
-                    const card = e.target.closest(".food-card");
-                    const foodName = card.querySelector(".food-name").innerText.trim();
-                    this.openModal(foodName);
-                });
-            }
-        });
-    }
-};
-
-// Tự động chạy init khi trang tải xong
-document.addEventListener('DOMContentLoaded', () => {
-    window.RecipeManager.init();
-=======
     }
 
     // 4. XỬ LÝ SỰ KIỆN CLICK NÚT "XEM CÔNG THỨC"
@@ -423,5 +331,4 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = "auto";
         }
     });
->>>>>>> 9fb01a2cd61f8d64c56f4a97a5636e4bd78025df
 });
