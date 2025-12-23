@@ -16,9 +16,9 @@ const MealPlanner = {
   },
 
   currentWeek: 1,
-  mealPlan: {}, // { week1: { monday: { breakfast: {...}, lunch: {...}, dinner: {...} }, ... } }
-  foodUsageCount: {}, // Track how many times each food is used in current week
-  previousWeekFoods: [], // Foods used in previous weeks
+  mealPlan: {},
+  foodUsageCount: {},
+  previousWeekFoods: [],
   currentSelectedSlot: null,
 
   // ===== CONSTANTS =====
@@ -41,13 +41,8 @@ const MealPlanner = {
     sunday: "CN",
   },
   meals: ["breakfast", "lunch", "dinner"],
-  mealNames: {
-    breakfast: "Sáng",
-    lunch: "Trưa",
-    dinner: "Tối",
-  },
+  mealNames: { breakfast: "Sáng", lunch: "Trưa", dinner: "Tối" },
 
-  // ===== FOOD DATABASE =====
   get foodDatabase() {
     return FOOD_DATABASE;
   },
@@ -57,6 +52,9 @@ const MealPlanner = {
     this.initializeMealPlan();
     this.renderCalendar();
     this.bindEvents();
+
+    // Tự động mở popup cài đặt nếu chưa có dữ liệu (Optional)
+    // this.openSettingsModal();
   },
 
   initializeMealPlan() {
@@ -74,14 +72,38 @@ const MealPlanner = {
   },
 
   bindEvents() {
-    // Modal backdrop click
-    const modal = document.getElementById("foodModal");
-    if (modal) {
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          this.closeModal();
-        }
+    // Modal Food Selection Backdrop Click
+    const foodModal = document.getElementById("foodModal");
+    if (foodModal) {
+      foodModal.addEventListener("click", (e) => {
+        if (e.target === foodModal) this.closeModal();
       });
+    }
+
+    // Modal Settings Backdrop Click (MỚI)
+    const settingsModal = document.getElementById("settingsModal");
+    if (settingsModal) {
+      settingsModal.addEventListener("click", (e) => {
+        if (e.target === settingsModal) this.closeSettingsModal();
+      });
+    }
+  },
+
+  // ===== SETTINGS MODAL HANDLING (MỚI) =====
+  openSettingsModal() {
+    const modal = document.getElementById("settingsModal");
+    if (modal) {
+      modal.style.display = "flex";
+      // Thêm timeout nhỏ để CSS transition hoạt động nếu có
+      setTimeout(() => modal.classList.add("show"), 10);
+    }
+  },
+
+  closeSettingsModal() {
+    const modal = document.getElementById("settingsModal");
+    if (modal) {
+      modal.classList.remove("show");
+      setTimeout(() => (modal.style.display = "none"), 300);
     }
   },
 
@@ -147,33 +169,30 @@ const MealPlanner = {
     );
     this.userData.tdee = tdee;
 
-    // Calculate target calories based on BMI
+    // Calculate target calories
     let targetCalories;
-    if (bmi < 18.5) {
-      targetCalories = tdee + 300; // Gain weight
-    } else if (bmi < 24.9) {
-      targetCalories = tdee; // Maintain
-    } else if (bmi < 29.9) {
-      targetCalories = tdee - 300; // Lose weight
-    } else {
-      targetCalories = tdee - 500; // Lose weight faster
-    }
+    if (bmi < 18.5) targetCalories = tdee + 300;
+    else if (bmi < 24.9) targetCalories = tdee;
+    else if (bmi < 29.9) targetCalories = tdee - 300;
+    else targetCalories = tdee - 500;
+
     this.userData.targetCalories = Math.round(targetCalories);
 
     // Update UI
     this.displayBMIResult();
     this.updateNutritionTargets();
+
+    // Không đóng modal ngay để người dùng xem kết quả BMI
+    // alert("Đã cập nhật chỉ số!");
   },
 
   displayBMIResult() {
     const bmi = parseFloat(this.userData.bmi);
-
     document.getElementById("bmiNumber").textContent = this.userData.bmi;
     document.getElementById("tdeeValue").textContent = this.userData.tdee;
     document.getElementById("targetCalories").textContent =
       this.userData.targetCalories;
 
-    // BMI Status
     let status;
     if (bmi < 18.5) status = "Thiếu cân";
     else if (bmi < 24.9) status = "Bình thường";
@@ -181,25 +200,21 @@ const MealPlanner = {
     else status = "Béo phì";
     document.getElementById("bmiStatus").textContent = status;
 
-    // Position pointer
     let pointerPosition;
     if (bmi < 16) pointerPosition = 5;
     else if (bmi > 35) pointerPosition = 95;
     else pointerPosition = ((bmi - 16) / (35 - 16)) * 100;
     document.getElementById("bmiPointer").style.left = `${pointerPosition}%`;
 
-    // Show result card
     document.getElementById("bmiResult").classList.add("show");
   },
 
   updateNutritionTargets() {
     const calories = this.userData.targetCalories;
-
-    // Calculate macros (typical ratio)
-    const carbs = Math.round((calories * 0.5) / 4); // 50% carbs, 4 cal/g
-    const protein = Math.round((calories * 0.25) / 4); // 25% protein, 4 cal/g
-    const fat = Math.round((calories * 0.25) / 9); // 25% fat, 9 cal/g
-    const fiber = 25; // Fixed recommendation
+    const carbs = Math.round((calories * 0.5) / 4);
+    const protein = Math.round((calories * 0.25) / 4);
+    const fat = Math.round((calories * 0.25) / 9);
+    const fiber = 25;
 
     document.getElementById("totalCarbs").textContent = carbs;
     document.getElementById("totalProtein").textContent = protein;
@@ -279,22 +294,39 @@ const MealPlanner = {
     return `<div class="add-meal-icon">+</div>`;
   },
 
-  // ===== MODAL HANDLING =====
+  // ===== FOOD MODAL HANDLING =====
   openFoodModal(day, meal) {
     this.currentSelectedSlot = { day, meal };
     document.getElementById(
       "modalTitle"
     ).textContent = `Chọn món ăn - Bữa ${this.mealNames[meal]} - ${this.dayNames[day]}`;
     this.renderFoodGrid("all");
-    document.getElementById("foodModal").classList.add("show");
+
+    // --- SỬA ĐOẠN NÀY ---
+    const modal = document.getElementById("foodModal");
+    if (modal) {
+      modal.style.display = "flex"; // Bật hiển thị trước
+      setTimeout(() => {
+        modal.classList.add("show"); // Thêm class để chạy animation opacity
+      }, 10);
+    }
   },
 
   closeModal() {
-    document.getElementById("foodModal").classList.remove("show");
-    this.currentSelectedSlot = null;
+    // --- SỬA ĐOẠN NÀY ---
+    const modal = document.getElementById("foodModal");
+    if (modal) {
+      modal.classList.remove("show"); // Tắt animation trước
+      this.currentSelectedSlot = null;
+
+      // Đợi 300ms cho transition chạy xong rồi mới ẩn hoàn toàn
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 300);
+    }
   },
 
-  // ===== FOOD FILTERING =====
+  // ===== FILTER & GRID =====
   filterFood(category) {
     document.querySelectorAll(".filter-tab").forEach((tab) => {
       tab.classList.toggle(
@@ -310,14 +342,12 @@ const MealPlanner = {
     this.foodUsageCount = {};
     const weekData = this.mealPlan[`week${this.currentWeek}`];
     if (!weekData) return;
-
     this.days.forEach((day) => {
       this.meals.forEach((meal) => {
         const mealData = weekData[day]?.[meal];
-        if (mealData) {
+        if (mealData)
           this.foodUsageCount[mealData.id] =
             (this.foodUsageCount[mealData.id] || 0) + 1;
-        }
       });
     });
   },
@@ -380,15 +410,10 @@ const MealPlanner = {
   selectFood(foodId) {
     const food = this.foodDatabase.find((f) => f.id === foodId);
     if (!food || !this.currentSelectedSlot) return;
-
     const { day, meal } = this.currentSelectedSlot;
-
-    if (!this.mealPlan[`week${this.currentWeek}`]) {
-      this.initializeMealPlan();
-    }
+    if (!this.mealPlan[`week${this.currentWeek}`]) this.initializeMealPlan();
 
     this.mealPlan[`week${this.currentWeek}`][day][meal] = { ...food };
-
     this.updateFoodUsageCount();
     this.renderCalendar();
     this.checkNutritionBalance();
@@ -404,11 +429,9 @@ const MealPlanner = {
     }
   },
 
-  // ===== NUTRITION BALANCE CHECK =====
   checkNutritionBalance() {
     const weekData = this.mealPlan[`week${this.currentWeek}`];
     if (!weekData) return;
-
     let categories = { carbs: 0, protein: 0, fat: 0, fiber: 0, balanced: 0 };
     let totalMeals = 0;
 
@@ -429,9 +452,7 @@ const MealPlanner = {
       warning.classList.add("hidden");
       return;
     }
-
-    // Check for imbalance
-    const threshold = totalMeals * 0.6; // If any category > 60%
+    const threshold = totalMeals * 0.6;
     let isImbalanced = false;
     let imbalanceType = "";
 
@@ -460,52 +481,46 @@ const MealPlanner = {
   // ===== AI AUTO GENERATE =====
   autoGenerateMeals() {
     if (!this.userData.targetCalories) {
-      alert("Vui lòng tính BMI trước khi tạo thực đơn tự động!");
+      // Cập nhật: Nếu chưa có chỉ số thì nhắc người dùng mở cài đặt
+      const confirmOpen = confirm(
+        "Bạn cần cập nhật chỉ số cơ thể trước khi tạo thực đơn tự động. Mở cài đặt ngay?"
+      );
+      if (confirmOpen) {
+        this.openSettingsModal();
+      }
       return;
     }
 
     this.initializeMealPlan();
-
     const usedFoods = new Set(this.previousWeekFoods);
     const weeklyUsage = {};
 
     this.days.forEach((day) => {
       this.meals.forEach((meal) => {
-        // Get foods for this meal type that haven't been used too much
         let availableFoods = this.foodDatabase.filter((food) => {
           const usage = weeklyUsage[food.id] || 0;
           return usage < 2 && !usedFoods.has(food.id);
         });
-
-        // If all foods are used, allow repeats but still limit to 2 per week
         if (availableFoods.length === 0) {
           availableFoods = this.foodDatabase.filter((food) => {
             const usage = weeklyUsage[food.id] || 0;
             return usage < 2;
           });
         }
-
-        // Ensure variety in categories
         const currentDayMeals = this.mealPlan[`week${this.currentWeek}`][day];
         const usedCategories = Object.values(currentDayMeals)
           .filter((m) => m)
           .map((m) => m.category);
-
-        // Prioritize different categories
         let prioritizedFoods = availableFoods.filter(
           (f) => !usedCategories.includes(f.category)
         );
-        if (prioritizedFoods.length === 0) {
-          prioritizedFoods = availableFoods;
-        }
+        if (prioritizedFoods.length === 0) prioritizedFoods = availableFoods;
 
-        // Random selection
         if (prioritizedFoods.length > 0) {
           const randomIndex = Math.floor(
             Math.random() * prioritizedFoods.length
           );
           const selectedFood = prioritizedFoods[randomIndex];
-
           this.mealPlan[`week${this.currentWeek}`][day][meal] = {
             ...selectedFood,
           };
@@ -546,7 +561,6 @@ const MealPlanner = {
   storePreviousWeekFoods() {
     const weekData = this.mealPlan[`week${this.currentWeek}`];
     if (!weekData) return;
-
     this.previousWeekFoods = [];
     this.days.forEach((day) => {
       this.meals.forEach((meal) => {
@@ -568,7 +582,6 @@ function toggleTheme() {
   localStorage.setItem("theme", newTheme);
 }
 
-// Load saved theme
 (function () {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
@@ -577,7 +590,10 @@ function toggleTheme() {
 })();
 
 // ===== GLOBAL FUNCTION EXPORTS =====
-// Export functions for onclick handlers in HTML
+// Cập nhật thêm các hàm mới vào Window để HTML gọi được
+window.openSettingsModal = () => MealPlanner.openSettingsModal();
+window.closeSettingsModal = () => MealPlanner.closeSettingsModal();
+
 window.selectGender = (gender) => MealPlanner.selectGender(gender);
 window.selectActivity = (level) => MealPlanner.selectActivity(level);
 window.calculateBMI = () => MealPlanner.calculateBMI();
@@ -591,7 +607,6 @@ window.previousWeek = () => MealPlanner.previousWeek();
 window.nextWeek = () => MealPlanner.nextWeek();
 window.toggleTheme = toggleTheme;
 
-// ===== INITIALIZE ON DOM READY =====
 document.addEventListener("DOMContentLoaded", () => {
   MealPlanner.init();
 });

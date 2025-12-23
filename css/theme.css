@@ -118,6 +118,111 @@
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
 }
 
+/* Recipe Modal Styles */
+.modal-overlay {
+    display: none; /* Ẩn mặc định */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Màu nền đen mờ */
+    backdrop-filter: blur(5px); /* Hiệu ứng mờ background */
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background-color: var(--bg-card, #fff); /* Tương thích với dark mode nếu có biến này */
+    color: var(--text-primary, #333);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s;
+}
+
+/* Nút đóng (X) */
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #ff4757;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style cho nội dung bên trong Modal */
+.recipe-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.recipe-title {
+    font-size: 2rem;
+    color: #ff4757;
+    margin-bottom: 0.5rem;
+}
+
+.recipe-image-large {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.recipe-section {
+    margin-bottom: 1.5rem;
+}
+
+.recipe-section h4 {
+    color: #2f3542;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    border-left: 4px solid #ff4757;
+    padding-left: 10px;
+}
+
+.recipe-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.recipe-steps {
+    list-style-type: decimal;
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.recipe-steps li {
+    margin-bottom: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
 /* Theme Toggle Button */
 .theme-toggle {
     position: fixed;
@@ -215,5 +320,3 @@
         --input-bg: #1a1a2e;
     }
 }
-
-
