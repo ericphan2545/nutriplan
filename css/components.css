@@ -56,6 +56,27 @@
     display: flex;
     list-style: none;
     gap: var(--spacing-xl);
+    position: relative;
+    align-items: center;
+}
+
+.nav {
+    position: relative;
+}
+
+.nav-indicator {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: var(--radius-full);
+    pointer-events: none;
+    transform: translate(-9999px, -50%);
+    transition: transform 0.22s ease, width 0.22s ease, height 0.22s ease, opacity 0.18s ease;
+    opacity: 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.14);
+    z-index: 0;
 }
 
 .nav a {
@@ -66,21 +87,13 @@
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-full);
     transition: var(--transition-normal);
+    position: relative;
+    z-index: 1;
 }
 
 .nav a:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-}
-
-.nav a.nav-highlight {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.nav a.nav-highlight:hover {
-    background: rgba(255, 255, 255, 0.35);
-    border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* ===== BUTTONS ===== */
@@ -836,14 +849,43 @@
 @media (max-width: 768px) {
     .nav ul {
         gap: var(--spacing-md);
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .search-bar {
         flex-direction: column;
     }
     
+    .search-container {
+        padding: var(--spacing-lg);
+        gap: var(--spacing-md);
+    }
+
+    .search-input {
+        font-size: 0.95rem;
+        padding-left: 3rem;
+    }
+
     .filters {
         justify-content: center;
+        gap: var(--spacing-sm);
+    }
+
+    .filter-group {
+        width: 100%;
+        overflow-x: auto;
+        padding: 0.25rem 0;
+        scrollbar-width: thin;
+    }
+
+    .filter-group::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .filter-group::-webkit-scrollbar-thumb {
+        background: var(--pale-green);
+        border-radius: 4px;
     }
     
     .section-title::after {
@@ -871,5 +913,64 @@
     
     .bmi-value {
         font-size: 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .logo h1 {
+        font-size: 1.4rem;
+    }
+
+    .logo-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.4rem;
+    }
+
+    .search-container {
+        padding: var(--spacing-md);
+        border-radius: var(--radius-lg);
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .filter-btn {
+        white-space: nowrap;
+    }
+
+    .food-card .food-image {
+        height: 170px;
+    }
+}
+
+@media (max-width: 420px) {
+    .nav ul {
+        gap: var(--spacing-sm);
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .search-bar {
+        gap: var(--spacing-sm);
+    }
+
+    .search-input-wrapper::before {
+        left: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .food-content {
+        padding: var(--spacing-md);
+    }
+
+    .food-description {
+        min-height: auto;
     }
 }
