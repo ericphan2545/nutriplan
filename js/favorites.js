@@ -3,6 +3,20 @@
  * NutriPlan Application
  */
 
+// Helper function to get base path
+function getBasePath() {
+  // Try to get from import.meta.env (Vite)
+  if (typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL) {
+    return import.meta.env.BASE_URL;
+  }
+  // Fallback: detect from current path
+  const path = window.location.pathname;
+  if (path.startsWith('/NutriPlan/')) {
+    return '/NutriPlan/';
+  }
+  return '/';
+}
+
 // Food database for reference
 const foodDatabase = [
   {
@@ -126,6 +140,7 @@ const Favorites = {
     const grid = document.getElementById("favoritesGrid");
     const emptyState = document.getElementById("emptyState");
     const resultCount = document.getElementById("favoriteCount");
+    const basePath = getBasePath();
 
     if (favoriteFoods.length === 0) {
       grid.style.display = "none";
@@ -140,10 +155,18 @@ const Favorites = {
 
     grid.innerHTML = favoriteFoods
       .map(
-        (food) => `
+        (food) => {
+          // Fix image path: if it's a relative path (not starting with http/https), add base path
+          let imagePath = food.image;
+          if (!imagePath.startsWith('http://') && !imagePath.startsWith('https://')) {
+            // Remove leading slash if present, then add base path
+            imagePath = imagePath.startsWith('/') ? imagePath : basePath + imagePath;
+          }
+          
+          return `
             <article class="food-card">
                 <div class="image-container">
-                    <img src="${food.image}" alt="${food.name}" class="food-image">
+                    <img src="${imagePath}" alt="${food.name}" class="food-image">
                     <span class="food-category-badge">${food.category}</span>
                     <div class="food-favorite" onclick="Favorites.removeFavorite(${food.id})">
                         <span>❤️</span>
@@ -159,7 +182,8 @@ const Favorites = {
                     <button class="view-recipe-btn">Xem Công Thức</button>
                 </div>
             </article>
-        `
+        `;
+        }
       )
       .join("");
   },
