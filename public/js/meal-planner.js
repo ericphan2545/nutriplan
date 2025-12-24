@@ -14,6 +14,44 @@ const MealPlanner = {
     tdee: null,
     targetCalories: null,
   },
+  saveData() {
+    const dataToSave = {
+      userData: this.userData,
+      mealPlan: this.mealPlan,
+      currentWeek: this.currentWeek,
+      previousWeekFoods: this.previousWeekFoods
+    };
+    localStorage.setItem('nutriPlanData', JSON.stringify(dataToSave));
+  },
+
+  loadData() {
+    const savedData = localStorage.getItem('nutriPlanData');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      this.userData = parsedData.userData || this.userData;
+      this.mealPlan = parsedData.mealPlan || {};
+      this.currentWeek = parsedData.currentWeek || 1;
+      this.previousWeekFoods = parsedData.previousWeekFoods || [];
+      
+      // Cập nhật lại giao diện hiển thị tuần hiện tại
+      const weekDisplay = document.getElementById("currentWeek");
+      if(weekDisplay) weekDisplay.textContent = `Tuần ${this.currentWeek}`;
+      
+      // Nếu đã có thông tin BMI, hiển thị lại kết quả lên màn hình
+      if (this.userData.bmi) {
+         // Điền lại các ô input
+         document.getElementById("age").value = this.userData.age || '';
+         document.getElementById("height").value = this.userData.height || '';
+         document.getElementById("weight").value = this.userData.weight || '';
+         this.selectGender(this.userData.gender);
+         this.selectActivity(this.userData.activityLevel);
+         
+         // Hiển thị kết quả tính toán
+         this.displayBMIResult();
+         this.updateNutritionTargets();
+      }
+    }
+  },
 
   currentWeek: 1,
   mealPlan: {},
@@ -49,12 +87,11 @@ const MealPlanner = {
 
   // ===== INITIALIZATION =====
   init() {
+    this.loadData(); // <--- THÊM DÒNG NÀY ĐẦU TIÊN
     this.initializeMealPlan();
     this.renderCalendar();
     this.bindEvents();
-
-    // Tự động mở popup cài đặt nếu chưa có dữ liệu (Optional)
-    // this.openSettingsModal();
+    this.checkNutritionBalance(); // Kiểm tra lại cân bằng dinh dưỡng khi load lại
   },
 
   initializeMealPlan() {
@@ -181,6 +218,7 @@ const MealPlanner = {
     // Update UI
     this.displayBMIResult();
     this.updateNutritionTargets();
+    this.saveData();
 
     // Không đóng modal ngay để người dùng xem kết quả BMI
     // alert("Đã cập nhật chỉ số!");
@@ -417,6 +455,7 @@ const MealPlanner = {
     this.updateFoodUsageCount();
     this.renderCalendar();
     this.checkNutritionBalance();
+    this.saveData();
     this.closeModal();
   },
 
@@ -426,6 +465,7 @@ const MealPlanner = {
       this.updateFoodUsageCount();
       this.renderCalendar();
       this.checkNutritionBalance();
+      this.saveData();
     }
   },
 
@@ -533,6 +573,7 @@ const MealPlanner = {
     this.updateFoodUsageCount();
     this.renderCalendar();
     this.checkNutritionBalance();
+    this.saveData();
   },
 
   // ===== WEEK NAVIGATION =====
@@ -545,6 +586,7 @@ const MealPlanner = {
       ).textContent = `Tuần ${this.currentWeek}`;
       this.initializeMealPlan();
       this.renderCalendar();
+      this.saveData();
     }
   },
 
@@ -556,6 +598,7 @@ const MealPlanner = {
     ).textContent = `Tuần ${this.currentWeek}`;
     this.initializeMealPlan();
     this.renderCalendar();
+    this.saveData();
   },
 
   storePreviousWeekFoods() {
