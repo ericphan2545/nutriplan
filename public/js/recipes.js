@@ -1,9 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. CƠ SỞ DỮ LIỆU CÔNG THỨC (CẬP NHẬT ĐẦY ĐỦ 52 MÓN)
+  // 1. CƠ SỞ DỮ LIỆU CÔNG THỨC
   const recipesDB = {
     "Cơm gà Hội An": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211bb8eaa78a49193e39bf1374969bb2713.jpg",
+      category: "Món chính",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description:
+        "Cơm gà vàng ươm thơm lừng, thịt gà dai ngọt đặc sản phố Hội.",
       ingredients: [
         "1 bát gạo",
         "150g ức gà",
@@ -18,9 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "Dọn cơm kèm rau thơm và nước mắm",
       ],
     },
-    "Phở Bò Hà Nội": {
+    "Phở bò Hà Nội": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512111dfcf065cac26fc487bbc61bf06b3880.jpg",
+      category: "Món nước",
+      time: "180 phút",
+      difficulty: "Khó",
+      description:
+        "Món ăn quốc hồn quốc túy với nước dùng thanh ngọt từ xương bò.",
       ingredients: [
         "200g bánh phở",
         "150g thịt bò",
@@ -38,6 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bún chả Hà Nội": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512118dae424aca7dcc6e03d49502e50564ad.jpg",
+      category: "Món bún",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description:
+        "Thịt nướng than hoa thơm lừng ăn kèm bún và nước mắm chua ngọt.",
       ingredients: [
         "300g thịt ba chỉ",
         "200g thịt nạc vai xay",
@@ -56,6 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bánh mì thịt": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211b890f3c4b0c5a6e2042935529195dbcc.jpg",
+      category: "Đồ ăn nhanh",
+      time: "15 phút",
+      difficulty: "Dễ",
+      description:
+        "Ổ bánh mì giòn rụm kẹp pate, thịt nguội đậm đà hương vị Việt.",
       ingredients: [
         "1 ổ bánh mì",
         "100g pate gan",
@@ -74,6 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Gỏi cuốn tôm thịt": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512113b29efa85e5718ada0a48add33674027.jpg",
+      category: "Khai vị",
+      time: "30 phút",
+      difficulty: "Dễ",
+      description:
+        "Món cuốn thanh mát với tôm thịt tươi ngon, chấm tương đen béo ngậy.",
       ingredients: [
         "10 tờ bánh tráng",
         "200g tôm sú",
@@ -92,6 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bún bò Huế": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211a65a9d7e75c2950b772061f5d4240959.jpg",
+      category: "Món nước",
+      time: "120 phút",
+      difficulty: "Khó",
+      description: "Hương vị cay nồng đặc trưng cố đô với sả và mắm ruốc.",
       ingredients: [
         "300g bún tươi",
         "200g bắp bò",
@@ -110,6 +139,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cá kho tộ": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121101c1ece6f4c310b83388e44e8a426d88.jpg",
+      category: "Món mặn",
+      time: "50 phút",
+      difficulty: "Trung bình",
+      description: "Cá kho đậm đà, màu cánh gián đẹp mắt, cực kỳ đưa cơm.",
       ingredients: [
         "500g cá lóc hoặc cá basa",
         "Nước màu (caramel)",
@@ -128,6 +161,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Thịt kho tàu": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211f75b0d44512fe25e88f9dd3fe35c47cb.jpg",
+      category: "Món mặn",
+      time: "90 phút",
+      difficulty: "Trung bình",
+      description:
+        "Thịt kho mềm rục, trứng vịt thấm vị, món ăn không thể thiếu ngày Tết.",
       ingredients: [
         "500g thịt ba chỉ",
         "6 quả trứng vịt",
@@ -146,6 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Canh chua cá": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211a9a226403aae0ac8bc0c76af0924ff60.jpg",
+      category: "Món canh",
+      time: "35 phút",
+      difficulty: "Trung bình",
+      description: "Vị chua thanh của me và dứa kết hợp với cá tươi ngon.",
       ingredients: [
         "400g cá lóc",
         "200g dứa (thơm)",
@@ -164,6 +206,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Chả giò (Nem rán)": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211da36eabaf4ee0d560de48168b94a5a13.jpg",
+      category: "Khai vị",
+      time: "50 phút",
+      difficulty: "Trung bình",
+      description:
+        "Những cuốn chả giò vàng ruộm, giòn tan với nhân thịt tôm đầy đặn.",
       ingredients: [
         "200g thịt heo xay",
         "100g tôm băm",
@@ -182,6 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cơm tấm sườn bì chả": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512115f00d28a72c4e0461d63cb9102b90340.jpg",
+      category: "Món chính",
+      time: "75 phút",
+      difficulty: "Trung bình",
+      description: "Sườn nướng thơm phức ăn cùng cơm tấm Sài Gòn đặc trưng.",
       ingredients: [
         "1 bát cơm tấm",
         "1 miếng sườn nướng",
@@ -200,6 +251,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Mì Quảng": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512111cd4ebc0fe6f5edb840fe4c940c89ec1.jpg",
+      category: "Món nước",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description:
+        "Đặc sản Quảng Nam với nước lèo sệt đậm đà và bánh đa giòn tan.",
       ingredients: [
         "300g mì Quảng",
         "200g tôm, 150g thịt heo",
@@ -218,6 +274,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bánh xèo": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211227bda212912ca66f4fdcc51c15b7bd0.jpg",
+      category: "Món bánh",
+      time: "50 phút",
+      difficulty: "Trung bình",
+      description: "Bánh xèo vàng ươm, vỏ giòn tan, nhân tôm thịt đầy ắp.",
       ingredients: [
         "200g bột bánh xèo",
         "200g tôm, 150g thịt ba chỉ",
@@ -236,6 +296,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Hủ tiếu Nam Vang": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121163ea3d4e399a9dc8564c7d012ee19235.jpg",
+      category: "Món nước",
+      time: "90 phút",
+      difficulty: "Khó",
+      description:
+        "Nước dùng ngọt thanh từ xương, ăn kèm tôm, gan và thịt băm.",
       ingredients: [
         "200g hủ tiếu khô",
         "100g thịt heo, 100g tôm",
@@ -254,6 +319,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bò lúc lắc": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512114690676a46bf3fc17ee07ec6c451e858.jpg",
+      category: "Món xào",
+      time: "30 phút",
+      difficulty: "Dễ",
+      description: "Thịt bò mềm mọng nước, xào nhanh lửa lớn với rau củ.",
       ingredients: [
         "300g thịt bò thăn",
         "Tỏi, hành tây",
@@ -272,6 +341,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Gà nướng muối ớt": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512116a7638a4b19fca2c111d86388ffa5f94.jpg",
+      category: "Món nướng",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description: "Gà nướng da giòn, thịt cay nồng vị muối ớt sả.",
       ingredients: [
         "1 con gà ta (1.2kg)",
         "Muối hạt, ớt bột",
@@ -290,6 +363,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Lẩu thái hải sản": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211f684b0d880c4157c38e2e6063856a4de.jpg",
+      category: "Lẩu",
+      time: "45 phút",
+      difficulty: "Trung bình",
+      description: "Nồi lẩu chua cay đậm đà, ngập tràn hải sản tươi ngon.",
       ingredients: [
         "500g hải sản các loại",
         "Nấm, đậu hũ, rau",
@@ -308,6 +385,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cháo lòng": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512114a8f617e9ab5e1a1211de1521e00a984.jpg",
+      category: "Cháo/Súp",
+      time: "90 phút",
+      difficulty: "Khó",
+      description:
+        "Cháo sánh mịn nấu từ nước luộc lòng, ăn kèm dồi trường giòn sật.",
       ingredients: [
         "200g gạo",
         "300g lòng heo các loại",
@@ -326,6 +408,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bún riêu cua": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121121c7774ff5ecf909e54251366bdd3aa7.jpg",
+      category: "Món nước",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description:
+        "Vị ngọt thanh của cua đồng hòa quyện với vị chua dịu của cà chua.",
       ingredients: [
         "300g bún tươi",
         "200g cua đồng",
@@ -344,6 +431,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Xôi gà": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211cb476ff00d1f5fa213c65106ea2d2d01.jpg",
+      category: "Món xôi",
+      time: "50 phút",
+      difficulty: "Trung bình",
+      description:
+        "Xôi dẻo thơm nấu cùng nước gà, ăn kèm gà xé và hành phi.",
       ingredients: [
         "300g gạo nếp",
         "200g thịt gà",
@@ -362,6 +454,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bánh cuốn": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121195bf6ac219dc8a3be5d7b0e123e07848.jpg",
+      category: "Món bánh",
+      time: "45 phút",
+      difficulty: "Khó",
+      description:
+        "Bánh tráng mỏng tang, nhân thịt mộc nhĩ, chấm nước mắm cà cuống.",
       ingredients: [
         "300g bột gạo",
         "150g thịt heo xay",
@@ -380,6 +477,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bún đậu mắm tôm": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121178444a3dabd4ecb8fc67c5af6bc0b3cd.jpg",
+      category: "Món bún",
+      time: "30 phút",
+      difficulty: "Dễ",
+      description:
+        "Mẹt bún đậu đầy đủ với đậu rán giòn, chả cốm và mắm tôm dậy mùi.",
       ingredients: [
         "300g bún lá",
         "200g đậu hũ chiên",
@@ -398,6 +500,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bánh canh cua": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512115361c7b706d799f8e3957fc6a7389637.jpg",
+      category: "Món nước",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description: "Sợi bánh canh dai ngon trong nước dùng cua sền sệt, đậm đà.",
       ingredients: [
         "300g bánh canh bột lọc",
         "200g thịt cua",
@@ -416,6 +522,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cơm chiên dương châu": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211c701c21a5816dd847fae54e9dadf7494.jpg",
+      category: "Món cơm",
+      time: "25 phút",
+      difficulty: "Dễ",
+      description:
+        "Cơm chiên tơi xốp, đầy màu sắc với rau củ, lạp xưởng và tôm.",
       ingredients: [
         "2 bát cơm nguội",
         "100g tôm, 100g lạp xưởng",
@@ -434,6 +545,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Gà kho gừng": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211263a254f56c7e07cf47066d4fd21625f.jpg",
+      category: "Món mặn",
+      time: "40 phút",
+      difficulty: "Dễ",
+      description:
+        "Món ăn gia đình ấm cúng với vị cay ấm của gừng thấm vào thịt gà.",
       ingredients: [
         "500g thịt gà",
         "100g gừng tươi",
@@ -452,6 +568,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Tôm rim mặn ngọt": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512111e13f344eaf045019ebb74124195a30d.jpg",
+      category: "Món mặn",
+      time: "20 phút",
+      difficulty: "Dễ",
+      description: "Tôm săn chắc, vỏ bóng lưỡng, vị mặn ngọt hài hòa đưa cơm.",
       ingredients: [
         "400g tôm sú",
         "Nước mắm, đường",
@@ -470,6 +590,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Canh khổ qua nhồi thịt": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211d6d4e18f3c6cf76a98aa98bfdd3c2a38.jpg",
+      category: "Món canh",
+      time: "45 phút",
+      difficulty: "Trung bình",
+      description:
+        "Món canh thanh nhiệt, vị đắng nhẹ của khổ qua hòa cùng vị ngọt thịt.",
       ingredients: [
         "2 quả khổ qua",
         "200g thịt heo xay",
@@ -488,6 +613,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Thịt heo quay": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512113fafb630e8dc20dd4c2eff63e5d7f7db.jpg",
+      category: "Món quay",
+      time: "90 phút",
+      difficulty: "Khó",
+      description: "Thịt quay bì giòn rụm, thịt mềm thơm hương ngũ vị hương.",
       ingredients: [
         "1kg thịt ba chỉ",
         "Ngũ vị hương, muối",
@@ -506,6 +635,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Vịt nấu chao": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512112849a7e45781df0b26b31d740e3d0854.jpg",
+      category: "Món nước",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description: "Vịt nấu chao thơm lừng, béo ngậy, khoai môn dẻo bùi.",
       ingredients: [
         "1/2 con vịt",
         "Chao đỏ",
@@ -524,6 +657,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Chè đậu xanh": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211890d01a4143a4d9b04ba39d2a32203ae.jpg",
+      category: "Tráng miệng",
+      time: "40 phút",
+      difficulty: "Dễ",
+      description: "Chè đậu xanh ngọt mát, thêm chút nước cốt dừa béo ngậy.",
       ingredients: [
         "200g đậu xanh cà vỏ",
         "100g đường",
@@ -542,6 +679,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bánh flan": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512110deb1e4e0a95e5143aa0e03245a87301.jpg",
+      category: "Tráng miệng",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description:
+        "Bánh flan mềm mịn, thơm mùi trứng sữa và sốt caramel đắng nhẹ.",
       ingredients: [
         "4 quả trứng",
         "400ml sữa tươi",
@@ -560,6 +702,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Chè ba màu": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121104f19aa9721eff2bffe60f2f24fc2da2.jpg",
+      category: "Tráng miệng",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description:
+        "Ly chè bắt mắt với đậu xanh, đậu đỏ và thạch, giải nhiệt ngày hè.",
       ingredients: [
         "Đậu xanh, đậu đỏ",
         "Thạch, nước cốt dừa",
@@ -578,6 +725,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Sườn xào chua ngọt": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512111a7d332b3aeaacb2627f20015e34eb67.jpg",
+      category: "Món mặn",
+      time: "45 phút",
+      difficulty: "Trung bình",
+      description: "Sườn non mềm thấm sốt chua ngọt đậm đà, màu sắc hấp dẫn.",
       ingredients: [
         "500g sườn non",
         "Cà chua, dứa, ớt chuông",
@@ -596,6 +747,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Đậu hũ sốt cà": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211fe68743bfab49703a9d91b42a17ee666.jpg",
+      category: "Món chay/mặn",
+      time: "20 phút",
+      difficulty: "Dễ",
+      description: "Đậu hũ chiên vàng hòa quyện trong sốt cà chua đỏ mọng.",
       ingredients: [
         "300g đậu hũ non",
         "2 quả cà chua",
@@ -614,6 +769,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cá chiên xù": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211f5b3c12af77cba6bbc0174bce28a7e4d.jpg",
+      category: "Món chiên",
+      time: "30 phút",
+      difficulty: "Dễ",
+      description: "Cá phi lê giòn rụm bên ngoài, mềm ngọt bên trong.",
       ingredients: [
         "400g cá phi lê",
         "Bột chiên xù",
@@ -632,6 +791,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Rau muống xào tỏi": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121179bd5c6a9d893b0cab560dbe87b32e51.jpg",
+      category: "Món rau",
+      time: "10 phút",
+      difficulty: "Dễ",
+      description: "Rau muống xanh mướt, giòn sần sật dậy mùi tỏi phi thơm.",
       ingredients: [
         "300g rau muống",
         "5 tép tỏi",
@@ -650,6 +813,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Súp cua": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211dde2e1fb24afbdc3eb3cd03476d508ef.jpg",
+      category: "Khai vị",
+      time: "40 phút",
+      difficulty: "Trung bình",
+      description: "Chén súp nóng hổi, sánh đặc với thịt cua và trứng.",
       ingredients: [
         "200g thịt cua",
         "2 quả trứng",
@@ -668,6 +835,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bò né": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121104b3de0fd17ea25990338d4aeb3c2e1a.jpg",
+      category: "Món chính",
+      time: "20 phút",
+      difficulty: "Trung bình",
+      description:
+        "Bò né nóng hổi trên chảo gang, ăn kèm trứng ốp la và bánh mì.",
       ingredients: [
         "150g thịt bò",
         "2 quả trứng ốp la",
@@ -686,6 +858,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Gỏi gà xé phay": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211cb2599c53497463495c2293bdd5010c1.jpg",
+      category: "Gỏi/Nộm",
+      time: "30 phút",
+      difficulty: "Dễ",
+      description: "Gà xé trộn gỏi chua ngọt, giòn ngon, thanh mát.",
       ingredients: [
         "300g ức gà",
         "Bắp cải, hành tây",
@@ -704,6 +880,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bánh bột lọc": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211c3ea18548b1ec7c3ae5e386725c4a217.jpg",
+      category: "Món bánh",
+      time: "60 phút",
+      difficulty: "Khó",
+      description: "Bánh bột lọc trong veo, dai dai với nhân tôm thịt đậm đà.",
       ingredients: [
         "200g bột năng",
         "200g tôm",
@@ -722,6 +902,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cơm cháy chà bông": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512114b6932d347f15ec934be8f4569cce316.jpg",
+      category: "Ăn vặt",
+      time: "40 phút",
+      difficulty: "Trung bình",
+      description: "Cơm cháy giòn rụm phủ đầy chà bông và mỡ hành béo ngậy.",
       ingredients: [
         "2 bát cơm nguội",
         "100g chà bông",
@@ -740,6 +924,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Ốc len xào dừa": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512119d990e4e1422e192eb124e75a066cf10.jpg",
+      category: "Hải sản",
+      time: "30 phút",
+      difficulty: "Trung bình",
+      description: "Ốc len béo ngậy ngập trong nước cốt dừa thơm nức mũi.",
       ingredients: [
         "500g ốc len",
         "Nước cốt dừa",
@@ -758,6 +946,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bún mắm": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211a88863468ef32057c05df468253f6ef6.jpg",
+      category: "Món nước",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description: "Đặc sản miền Tây với hương vị mắm cá linh đặc trưng.",
       ingredients: [
         "300g bún tươi",
         "Mắm cá linh",
@@ -776,6 +968,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cháo vịt": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512113d066527f0294204aa7c5a25aa89b33f.jpg",
+      category: "Cháo/Súp",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description: "Cháo vịt ngọt lịm, thịt vịt chấm nước mắm gừng ấm bụng.",
       ingredients: [
         "1/2 con vịt",
         "200g gạo",
@@ -794,6 +990,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bánh tráng trộn": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_202512119fca0f73897e157b77c82629d9c3ec23.jpg",
+      category: "Ăn vặt",
+      time: "15 phút",
+      difficulty: "Dễ",
+      description: "Món ăn vặt quốc dân với đủ vị chua cay mặn ngọt.",
       ingredients: [
         "200g bánh tráng cắt sợi",
         "Trứng cút, khô bò",
@@ -812,6 +1012,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Mì xào hải sản": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121144387b387f9a1b42706f7f522ff67585.jpg",
+      category: "Món xào",
+      time: "20 phút",
+      difficulty: "Dễ",
+      description: "Mì xào dai ngon, thấm vị hải sản và rau củ tươi.",
       ingredients: [
         "200g mì vàng",
         "200g hải sản tổng hợp",
@@ -830,6 +1034,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Chè trôi nước": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211cb07e79103153c0aef15ad995208f73a.jpg",
+      category: "Tráng miệng",
+      time: "50 phút",
+      difficulty: "Trung bình",
+      description:
+        "Viên chè trắng ngần, dẻo thơm quyện cùng nước đường gừng ấm nồng.",
       ingredients: [
         "200g bột nếp",
         "100g đậu xanh",
@@ -848,6 +1057,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Thịt bò xào ớt chuông": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211cdab62bf0079c899207c7fc1900b615e.jpg",
+      category: "Món xào",
+      time: "15 phút",
+      difficulty: "Dễ",
+      description: "Món xào nhanh gọn, giàu dinh dưỡng và màu sắc bắt mắt.",
       ingredients: [
         "250g thịt bò",
         "2 quả ớt chuông",
@@ -866,6 +1079,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Canh bí đỏ nấu tôm": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121136d58b4b9a72326933a7cebd81386703.jpg",
+      category: "Món canh",
+      time: "25 phút",
+      difficulty: "Dễ",
+      description: "Canh bí đỏ ngọt bùi, bổ dưỡng nấu cùng tôm tươi.",
       ingredients: [
         "300g bí đỏ",
         "150g tôm tươi",
@@ -884,6 +1101,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Xôi xéo": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_2025121179d2f731d6a1ad78841c1b654a0ac75d.jpg",
+      category: "Món xôi",
+      time: "60 phút",
+      difficulty: "Trung bình",
+      description:
+        "Xôi xéo vàng ươm gói lá sen, phủ đậu xanh và hành phi thơm nức.",
       ingredients: [
         "300g gạo nếp",
         "100g đậu xanh",
@@ -902,6 +1124,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Cà ri gà": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211ad04e1549ff99516864bf4137284470e.jpg",
+      category: "Món nước",
+      time: "45 phút",
+      difficulty: "Trung bình",
+      description: "Cà ri gà béo ngậy nước cốt dừa, chấm bánh mì cực ngon.",
       ingredients: [
         "500g thịt gà",
         "Khoai tây, cà rốt",
@@ -920,6 +1146,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Nem nướng Nha Trang": {
       image:
         "https://sf-static.upanhlaylink.com/img/image_20251211a0301f470a1bfac7c3c99fc31e2d9c0e.jpg",
+      category: "Món nướng",
+      time: "50 phút",
+      difficulty: "Khó",
+      description:
+        "Nem nướng thơm phức ăn kèm rau sống và nước chấm sệt đặc biệt.",
       ingredients: [
         "400g thịt heo xay",
         "Mỡ heo, tỏi",
@@ -941,14 +1172,63 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("recipe-modal");
   const modalBody = document.getElementById("modal-body-content");
   const closeBtn = document.querySelector(".close-modal");
-  const viewButtons = document.querySelectorAll(".view-recipe-btn");
+  const foodGrid = document.getElementById("food-grid"); // Grid ở trang index.html
+  const favoritesGrid = document.getElementById("favoritesGrid"); // Grid ở trang favorites.html
 
-  // 3. HÀM HIỂN THỊ MODAL
+  // 3. HÀM RENDER (HIỂN THỊ) MÓN ĂN RA MÀN HÌNH CHÍNH (Chỉ chạy nếu có foodGrid)
+  function renderFoodCards() {
+    if (!foodGrid) return; // Nếu không tìm thấy div (tức là đang ở trang favorites) thì dừng lại
+
+    foodGrid.innerHTML = ""; // Xóa sạch nội dung cũ (nếu có)
+
+    // Duyệt qua từng món trong recipesDB
+    for (let foodName in recipesDB) {
+      const recipe = recipesDB[foodName];
+
+      // Giá trị mặc định nếu trong DB chưa có các trường này
+      const category = recipe.category || "Món Ngon";
+      const time = recipe.time || "30 phút";
+      const difficulty = recipe.difficulty || "Dễ";
+      const description =
+        recipe.description ||
+        "Món ăn hấp dẫn, giàu dinh dưỡng cho bữa cơm gia đình.";
+
+      // Tạo chuỗi HTML cho thẻ Card
+      const cardHTML = `
+            <article class="food-card">
+                <div class="image-container">
+                    <img src="${recipe.image}" alt="${foodName}" class="food-image">
+                    <span class="food-category-badge">${category}</span>
+                    <div class="food-favorite"><span>❤️</span></div>
+                </div>
+                <div class="food-content">
+                    <h3 class="food-name">${foodName}</h3>
+                    <p class="food-description">${description}</p>
+                    <div class="food-meta">
+                        <span class="food-time">⏱️ ${time}</span>
+                        <span class="food-difficulty">${difficulty}</span>
+                    </div>
+                    <button class="view-recipe-btn">Xem Công Thức</button>
+                </div>
+            </article>
+        `;
+
+      // Thêm vào grid
+      foodGrid.innerHTML += cardHTML;
+    }
+
+    // Cập nhật lại bộ đếm số lượng món ăn
+    const countSpan = document.querySelector(".result-count");
+    if (countSpan) {
+      countSpan.innerText = `Hiển thị ${Object.keys(recipesDB).length} món ăn`;
+    }
+  }
+
+  // 4. HÀM HIỂN THỊ MODAL
   function openModal(foodName) {
     const recipe = recipesDB[foodName];
 
     if (recipe) {
-      // Tạo HTML cho nội dung
       let ingredientsHtml = recipe.ingredients
         .map((item) => `<li>${item}</li>`)
         .join("");
@@ -956,7 +1236,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .map((step) => `<li>${step}</li>`)
         .join("");
 
-      // Chèn vào Modal
       modalBody.innerHTML = `
                 <div class="recipe-header">
                     <img src="${recipe.image}" alt="${foodName}" class="recipe-image-large">
@@ -973,36 +1252,42 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>
             `;
-
-      // Hiển thị Modal
       modal.style.display = "block";
-      // Khóa cuộn trang web chính lại
       document.body.style.overflow = "hidden";
-    } else {
-      alert("Công thức cho món '" + foodName + "' đang được cập nhật!");
     }
   }
 
-  // 4. XỬ LÝ SỰ KIỆN CLICK NÚT "XEM CÔNG THỨC"
-  viewButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      // Tìm thẻ cha chứa nút bấm (food-card)
+  // 5. CHẠY HÀM RENDER ĐỂ VẼ GIAO DIỆN (cho index.html)
+  renderFoodCards();
+
+  // 6. XỬ LÝ SỰ KIỆN CLICK (Sử dụng Event Delegation cho cả 2 trang)
+  const handleRecipeClick = (e) => {
+    // Kiểm tra xem cái được click có phải là nút xem công thức không
+    if (e.target.classList.contains("view-recipe-btn")) {
       const card = e.target.closest(".food-card");
-      // Lấy tên món ăn từ thẻ h3
       const foodName = card.querySelector(".food-name").innerText.trim();
-
       openModal(foodName);
+    }
+  };
+
+  // Gán sự kiện cho food-grid (index.html)
+  if (foodGrid) {
+    foodGrid.addEventListener("click", handleRecipeClick);
+  }
+
+  // Gán sự kiện cho favoritesGrid (favorites.html)
+  if (favoritesGrid) {
+    favoritesGrid.addEventListener("click", handleRecipeClick);
+  }
+
+  // 7. XỬ LÝ ĐÓNG MODAL
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
     });
-  });
+  }
 
-  // 5. XỬ LÝ ĐÓNG MODAL
-  // Đóng khi ấn nút X
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    document.body.style.overflow = "auto"; // Mở lại cuộn trang
-  });
-
-  // Đóng khi ấn ra vùng đen bên ngoài
   window.addEventListener("click", (e) => {
     if (e.target == modal) {
       modal.style.display = "none";
