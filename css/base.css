@@ -55,8 +55,8 @@
     --scale-obese: #E57373;
     
     /* Font Families */
-    --font-primary: 'Quicksand', sans-serif;
-    --font-heading: 'Playfair Display', serif;
+    --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -84,6 +84,8 @@
     --max-width-sm: 600px;
 }
 
+
+
 /* Base Body Styles */
 body {
     font-family: var(--font-primary);
@@ -100,6 +102,12 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.3;
 }
 
+.logo h1 {
+    font-family: var(--font-heading);
+    font-style: italic; /* Looks very premium in italics */
+    letter-spacing: -1px;
+    font-weight: 600;
+}
 a {
     text-decoration: none;
     color: inherit;
