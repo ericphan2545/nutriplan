@@ -3,6 +3,10 @@
  * NutriPlan Application
  */
 
+// Import images so Vite can process them correctly
+import phoImage from "../assets/images/pho.jpg";
+import banhmiImage from "../assets/images/banhmi.jpg";
+
 // Helper function to get base path
 function getBasePath() {
   // Try to get from import.meta.env (Vite)
@@ -16,6 +20,12 @@ function getBasePath() {
   }
   return '/';
 }
+
+// Image mapping - maps food ID to imported image URL
+const imageMap = {
+  1: phoImage,
+  2: banhmiImage,
+};
 
 // Food database for reference
 const foodDatabase = [
@@ -156,10 +166,13 @@ const Favorites = {
     grid.innerHTML = favoriteFoods
       .map(
         (food) => {
-          // Fix image path: if it's a relative path (not starting with http/https), add base path
+          // Get image path: use imported image if available, otherwise use original path with base path
           let imagePath = food.image;
-          if (!imagePath.startsWith('http://') && !imagePath.startsWith('https://')) {
-            // Remove leading slash if present, then add base path
+          if (imageMap[food.id]) {
+            // Use imported image URL (already processed by Vite with correct base path)
+            imagePath = imageMap[food.id];
+          } else if (!imagePath.startsWith('http://') && !imagePath.startsWith('https://')) {
+            // For external images or images not in the map, add base path
             imagePath = imagePath.startsWith('/') ? imagePath : basePath + imagePath;
           }
           
