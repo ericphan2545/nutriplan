@@ -905,7 +905,7 @@
     /* Lift up significantly */
     transform: translateY(-12px) scale(1.02);
     /* Strong shadow on hover */
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--drop-shadow-2xl);
     border-color: rgba(76, 175, 80, 0.3);
 }
 
