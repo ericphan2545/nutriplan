@@ -42,24 +42,24 @@
                 <span class="filter-label">🏷️ Lọc theo:</span>
                 <div class="filter-group">
                     <button class="filter-btn active">Tất cả</button>
-                    <button class="filter-btn">Món Việt</button>
-                    <button class="filter-btn">Món Á</button>
-                    <button class="filter-btn">Món Âu</button>
-                    <button class="filter-btn">Tráng miệng</button>
-                    <button class="filter-btn">Đồ uống</button>
+                    <button class="filter-btn">Món nước</button>
+                    <button class="filter-btn">Món quay</button>
+                    <button class="filter-btn">Món tráng miệng</button>
+                    <button class="filter-btn">Món mặn</button>
                 </div>
-                <select class="filter-select">
-                    <option>Độ khó</option>
-                    <option>Dễ</option>
-                    <option>Trung bình</option>
-                    <option>Khó</option>
-                </select>
-                <select class="filter-select">
-                    <option>Thời gian</option>
-                    <option>Dưới 30 phút</option>
-                    <option>30-60 phút</option>
-                    <option>Trên 60 phút</option>
-                </select>
+                <select class="filter-select" id="filter-difficulty">
+        <option value="all">Độ khó (Tất cả)</option>
+        <option value="Dễ">Dễ</option>
+        <option value="Trung bình">Trung bình</option>
+        <option value="Khó">Khó</option>
+    </select>
+
+    <select class="filter-select" id="filter-time">
+        <option value="all">Thời gian (Tất cả)</option>
+        <option value="under_30">Dưới 30 phút</option>
+        <option value="30_60">30 - 60 phút</option>
+        <option value="over_60">Trên 60 phút</option>
+    </select>
             </div>
         </div>
     </section>
