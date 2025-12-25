@@ -64,36 +64,30 @@
     position: relative;
 }
 
-.nav-indicator {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    border-radius: var(--radius-full);
-    pointer-events: none;
-    transform: translate(-9999px, -50%);
-    transition: transform 0.22s ease, width 0.22s ease, height 0.22s ease, opacity 0.18s ease;
-    opacity: 0;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    background: rgba(255, 255, 255, 0.14);
-    z-index: 0;
-}
-
 .nav a {
     color: var(--white);
     text-decoration: none;
     font-weight: 600;
     font-size: 1rem;
     padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-md);
     transition: var(--transition-normal);
     position: relative;
     z-index: 1;
+    display: inline-block;
+    text-align: center;
 }
 
 .nav a:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
+}
+
+.nav a.active {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5), 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    font-weight: 700;
 }
 
 /* ===== BUTTONS ===== */
@@ -954,9 +948,32 @@
 /* ===== RESPONSIVE COMPONENTS ===== */
 @media (max-width: 768px) {
     .nav ul {
-        gap: var(--spacing-md);
-        flex-wrap: wrap;
+        flex-direction: row;
+        gap: var(--spacing-sm);
+        width: 100%;
         justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .nav ul li {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .nav a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: var(--spacing-sm) var(--spacing-xs);
+        border-radius: var(--radius-md);
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+    
+    .nav a.active {
+        background: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6), 0 4px 16px rgba(0, 0, 0, 0.2);
     }
     
     .search-bar {
@@ -1057,7 +1074,13 @@
 
 @media (max-width: 420px) {
     .nav ul {
-        gap: var(--spacing-sm);
+        gap: var(--spacing-xs);
+        flex-wrap: nowrap;
+    }
+    
+    .nav a {
+        padding: var(--spacing-sm) var(--spacing-xs);
+        font-size: 0.85rem;
     }
 
     .btn {
