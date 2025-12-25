@@ -32,17 +32,13 @@
             
             <nav class="nav">
                 <ul>
-                    <li><a href="index.html">Trang Chủ</a></li>
-                    
-                    <li><a href="meal-planner.html" class="active">🥗 Lập Thực Đơn</a></li>
-                    
-                    <li><a href="favorites.html">Yêu Thích</a></li>
+                    <li><a href="/NutriPlan/index.html">Trang Chủ</a></li>
+                    <li><a href="/NutriPlan/meal-planner.html">Lập Thực Đơn</a></li>
+                    <li><a href="/NutriPlan/favorites.html">Yêu Thích</a></li>
                 </ul>
             </nav>
 
-            <button class="btn-settings" onclick="openSettingsModal()" style="margin-left: 1rem; padding: 0.5rem 1rem; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer; font-weight: 600;">
-                <span>⚙️</span> Cài đặt
-            </button>
+            
         </div>
     </header>
 
@@ -51,6 +47,9 @@
         <div class="content-header">
           <h2 class="page-title">🗓️ Thực Đơn Tuần</h2>
           <div class="week-navigation">
+            <button class="btn-settings" onclick="openSettingsModal()" style="margin-left: 1rem; padding: 0.5rem 1rem; border-radius: 20px; background: var(--light-green); border: 1px solid var(--border-color); cursor: pointer; font-weight: 600;">
+                <span>⚙️</span> Chỉnh thông tin cơ thể & BMI
+            </button>
             <button class="week-nav-btn" onclick="previousWeek()">◀</button>
             <span class="current-week" id="currentWeek">Tuần 1</span>
             <button class="week-nav-btn" onclick="nextWeek()">▶</button>
