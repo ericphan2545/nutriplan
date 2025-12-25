@@ -640,7 +640,32 @@ h1, h2, h3 {
     display: flex; align-items: center; justify-content: center;
 }
 
+.detail-meal-btn {
+    position: absolute;
+    top: 4px; right: 25px;
+    width: 18px; height: 18px;
+    background: lightgray;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+
 .meal-slot:hover .remove-meal-btn { opacity: 1; }
+.meal-slot:hover .detail-meal-btn { opacity: 1; }
+
+.remove-meal-btn:hover {
+    background: #e53935;
+}
+
+.detail-meal-btn:hover {
+    background: gray;
+    color: white;
+}
 
 /* ===== MODAL COMMON STYLES ===== */
 .modal-overlay {

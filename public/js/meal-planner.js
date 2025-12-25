@@ -325,6 +325,7 @@ const MealPlanner = {
                         <div class="meal-calories">${mealData.calories} kcal</div>
                     </div>
                 </div>
+                <button class="detail-meal-btn" onclick="event.stopPropagation(); removeMeal('${day}', '${meal}')">!</button>
                 <button class="remove-meal-btn" onclick="event.stopPropagation(); removeMeal('${day}', '${meal}')">✕</button>
             `;
     }
