@@ -15,8 +15,9 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/meal-planner.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    
 
   </head>
   <body>
@@ -24,16 +25,18 @@
 
     <header class="header">
         <div class="header-content">
-            <div class="logo">
+            <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
                 <div class="logo-icon">🍳</div>
                 <h1>Food<span>Library</span></h1>
-            </div>
+            </a>
             
             <nav class="nav">
                 <ul>
-                    <li><a href="/NutriPlan/index.html">Trang Chủ</a></li>
-                    <li><a href="/NutriPlan/meal-planner.html">🥗 Lập Thực Đơn</a></li>
-                    <li><a href="/NutriPlan/favorites.html">Yêu Thích</a></li>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    
+                    <li><a href="meal-planner.html" class="active">🥗 Lập Thực Đơn</a></li>
+                    
+                    <li><a href="favorites.html">Yêu Thích</a></li>
                 </ul>
             </nav>
 
@@ -211,9 +214,9 @@
       </div>
     </div>
 
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <span class="icon-light">🌙</span>
-      <span class="icon-dark">☀️</span>
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="icon-light">🌙</span>
+        <span class="icon-dark">☀️</span>
     </button>
 
     <script src="js/nav-indicator.js"></script>
