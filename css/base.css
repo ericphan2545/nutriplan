@@ -55,9 +55,10 @@
     --scale-obese: #E57373;
     
     /* Font Families */
-    --font-heading: 'Cormorant Garamond', serif;
-    --font-primary: 'Inter', sans-serif; /* Keep body clean */
-    
+    /* --font-heading: 'Cormorant Garamond', serif; */
+    /* --font-primary: 'Inter', sans-serif;  */
+    --font-primary: 'Quicksand', sans-serif;
+    --font-heading: 'Playfair Display', serif;
     /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
