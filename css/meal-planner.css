@@ -101,7 +101,7 @@ h1, h2, h3 {
 }
 
 .logo span {
-    color: var(--accent);
+    color: var(--primary-light);
 }
 
 .nav-right {
