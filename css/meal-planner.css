@@ -166,6 +166,8 @@ h1, h2, h3 {
 }
 
 .page-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
     font-size: 1.75rem;
     color: var(--primary);
 }
@@ -471,6 +473,7 @@ h1, h2, h3 {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    
 }
 
 .nutrition-info .value {
@@ -502,6 +505,7 @@ h1, h2, h3 {
 }
 
 .calendar-title {
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.25rem;
     color: var(--primary);
 }
