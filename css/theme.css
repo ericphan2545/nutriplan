@@ -320,3 +320,81 @@
         --input-bg: #1a1a2e;
     }
 }
+/* ===================================
+   MODAL ACTION BUTTONS (MỚI)
+   =================================== */
+
+/* 1. Container định vị góc phải */
+
+
+/* 2. Style chung cho cả 2 nút (Tròn, nổi) */
+.modal-btn {
+    position: absolute; /* Định vị tuyệt đối so với modal-content */
+    top: 15px;          /* Cả 2 nút đều cách mép trên 15px */
+    z-index: 100;       /* Nổi lên trên ảnh */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--white, #ffffff);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    outline: none;
+}
+
+/* Hiệu ứng hover chung */
+.modal-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 3. Định vị riêng cho nút Yêu thích (GÓC TRÁI) */
+.favorite-btn {
+    left: 15px; /* Cách mép trái 15px */
+    color: #ccc;
+}
+
+.favorite-btn:hover {
+    color: #ff6b6b;
+}
+
+.favorite-btn.favorited {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.favorite-btn span {
+    margin-top: 2px;
+}
+
+/* 4. Định vị riêng cho nút Đóng (GÓC PHẢI) */
+.close-modal {
+    right: 15px; /* Cách mép phải 15px */
+    color: #666;
+}
+
+.close-modal:hover {
+    background-color: #ff4757;
+    color: white;
+}
+
+.close-modal span {
+    margin-top: -2px; 
+    line-height: 1;
+    font-size: 24px;
+}
+
+/* Hỗ trợ Dark Mode */
+[data-theme="dark"] .modal-btn {
+    background-color: var(--bg-secondary, #2d3436);
+    color: var(--text-primary, #dfe6e9);
+}
+[data-theme="dark"] .close-modal:hover {
+    background-color: #ff4757;
+    color: white;
+}

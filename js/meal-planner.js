@@ -144,6 +144,30 @@ const MealPlanner = {
     }
   },
 
+  openWarningModal() {
+    const modal = document.getElementById("warningModal");
+    if (modal) {
+      modal.style.display = "flex";
+      setTimeout(() => modal.classList.add("show"), 10);
+    }
+  },
+
+  closeWarningModal() {
+    const modal = document.getElementById("warningModal");
+    if (modal) {
+      modal.classList.remove("show");
+      setTimeout(() => (modal.style.display = "none"), 300);
+    }
+  },
+
+  confirmOpenSettings() {
+    this.closeWarningModal();
+    // Đợi modal cảnh báo đóng xong thì mở modal cài đặt
+    setTimeout(() => {
+        this.openSettingsModal();
+    }, 300);
+  },
+
   // ===== GENDER SELECTION =====
   selectGender(gender) {
     this.userData.gender = gender;
@@ -536,13 +560,12 @@ const MealPlanner = {
   // ===== AI AUTO GENERATE =====
   autoGenerateMeals() {
     if (!this.userData.targetCalories) {
-      // Cập nhật: Nếu chưa có chỉ số thì nhắc người dùng mở cài đặt
-      const confirmOpen = confirm(
-        "Bạn cần cập nhật chỉ số cơ thể trước khi tạo thực đơn tự động. Mở cài đặt ngay?"
-      );
-      if (confirmOpen) {
-        this.openSettingsModal();
-      }
+      // --- CODE CŨ (Xóa đi) ---
+      // const confirmOpen = confirm("...");
+      // if (confirmOpen) { this.openSettingsModal(); }
+      
+      // --- CODE MỚI (Thay bằng dòng này) ---
+      this.openWarningModal(); 
       return;
     }
 
@@ -664,6 +687,9 @@ window.autoGenerateMeals = () => MealPlanner.autoGenerateMeals();
 window.previousWeek = () => MealPlanner.previousWeek();
 window.nextWeek = () => MealPlanner.nextWeek();
 window.toggleTheme = toggleTheme;
+window.openWarningModal = () => MealPlanner.openWarningModal();
+window.closeWarningModal = () => MealPlanner.closeWarningModal();
+window.confirmOpenSettings = () => MealPlanner.confirmOpenSettings();
 
 document.addEventListener("DOMContentLoaded", () => {
   MealPlanner.init();

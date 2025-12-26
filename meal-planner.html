@@ -228,7 +228,26 @@
                 </div>
         </div>
     </div>
-
+    <div class="modal-overlay" id="warningModal" style="display: none;">
+    <div class="modal" style="max-width: 450px;">
+        <div class="modal-header" style="justify-content: center; border-bottom: none; padding-bottom: 0;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+        </div>
+        <div class="modal-body" style="text-align: center; padding-top: 0;">
+            <h3 class="modal-title" style="color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem;">Chưa có thông tin cơ thể</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">
+                Bạn cần cập nhật chỉ số cơ thể (BMI/TDEE) trước khi để hệ thống tự động tạo thực đơn. Bạn có muốn mở cài đặt ngay không?
+            </p>
+            
+            <div class="modal-actions" style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn-cancel" onclick="closeWarningModal()">Để sau</button>
+                <button class="btn-confirm" onclick="confirmOpenSettings()">
+                    <span>⚙️</span> Mở cài đặt
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
     <script src="js/nav-indicator.js"></script>
     <script type="module" src="js/theme.js"></script>
     <script src="js/food-database.js"></script>

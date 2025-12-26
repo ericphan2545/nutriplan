@@ -4,8 +4,6 @@
  */
 
 // Import images so Vite can process them correctly
-import phoImage from "../assets/images/pho.jpg";
-import banhmiImage from "../assets/images/banhmi.jpg";
 
 // Helper function to get base path
 function getBasePath() {
@@ -24,8 +22,6 @@ function getBasePath() {
 // Image mapping - maps food ID to imported image URL
 // (Giữ lại để tương thích ngược nếu cần, dù dữ liệu mới dùng URL online)
 const imageMap = {
-  1: phoImage,
-  2: banhmiImage,
 };
 
 // 1. DỮ LIỆU GỐC TỪ RECIPES.JS
@@ -1216,9 +1212,15 @@ const Favorites = {
   },
 
   renderFavorites() {
-    const favoriteFoods = this.getFavoriteFoods();
     const grid = document.getElementById("favoritesGrid");
+    // --- THÊM DÒNG NÀY ---
+    if (!grid) return; // Nếu không có lưới (đang ở trang chủ) thì dừng lại, không vẽ gì cả
+    // --------------------
+
     const emptyState = document.getElementById("emptyState");
+    const favoriteFoods = this.getFavoriteFoods();
+    //const grid = document.getElementById("favoritesGrid");
+    //const emptyState = document.getElementById("emptyState");
     const resultCount = document.getElementById("favoriteCount");
     const basePath = getBasePath();
 
@@ -1297,7 +1299,10 @@ const Favorites = {
   },
 };
 
+window.Favorites = Favorites;
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", () => {
-  Favorites.init();
+  if (document.getElementById("favoritesGrid")) {
+        Favorites.init();
+    }
 });
