@@ -1,3 +1,6 @@
+// ==========================================================================
+// 1. CƠ SỞ DỮ LIỆU CÔNG THỨC (GIỮ NGUYÊN DỮ LIỆU CŨ CỦA BẠN)
+// ==========================================================================
 const recipesDB = {
   "Cơm gà Hội An": {
     image: "https://sf-static.upanhlaylink.com/img/image_20251211bb8eaa78a49193e39bf1374969bb2713.jpg",
@@ -19,7 +22,7 @@ const recipesDB = {
   },
   "Bún chả Hà Nội": {
     image: "https://sf-static.upanhlaylink.com/img/image_202512118dae424aca7dcc6e03d49502e50564ad.jpg",
-    category: "Món mặn", /* Bún chấm nên xếp vào món mặn/khô */
+    category: "Món mặn",
     time: "60 phút",
     difficulty: "Trung bình",
     description: "Thịt nướng than hoa thơm lừng ăn kèm bún và nước mắm chua ngọt.",
@@ -469,298 +472,307 @@ const recipesDB = {
   }
 };
 
-window.showRecipeDetails = function(foodName) {
-    const modal = document.getElementById("recipe-modal");
-    const modalBody = document.getElementById("modal-body-content");
-    const recipe = recipesDB[foodName];
+// ==========================================================================
+// 2. RECIPE MANAGER (QUẢN LÝ LOGIC)
+// ==========================================================================
+const RecipeManager = {
+    // Lưu trữ các DOM elements cần thiết
+    elements: {
+        modal: null,
+        modalBody: null,
+        closeBtn: null,
+        foodGrid: null,
+        favoritesGrid: null,
+        difficultySelect: null,
+        timeSelect: null,
+        filterBtns: null,
+        searchInput: null,
+        searchBtn: null,
+        resultCount: null
+    },
 
-    if (recipe && modal && modalBody) {
-        // ... (Giữ nguyên phần render nội dung HTML cũ) ...
-        let ingredientsHtml = recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
-        let instructionsHtml = recipe.instructions.map((step) => `<li>${step}</li>`).join("");
+    // State: Lưu trạng thái lọc hiện tại
+    currentFilters: {
+        search: "",
+        category: "Tất cả",
+        difficulty: "all",
+        time: "all"
+    },
+
+    // --- KHỞI TẠO ---
+    init() {
+        this.cacheElements();
+        this.bindEvents();
+        this.renderFoodCards();
+    },
+
+    // --- CACHE DOM ELEMENTS ---
+    cacheElements() {
+        this.elements.modal = document.getElementById("recipe-modal");
+        this.elements.modalBody = document.getElementById("modal-body-content");
+        this.elements.closeBtn = document.querySelector(".close-modal");
+        this.elements.foodGrid = document.getElementById("food-grid");
+        this.elements.favoritesGrid = document.getElementById("favoritesGrid");
+        this.elements.difficultySelect = document.getElementById("filter-difficulty");
+        this.elements.timeSelect = document.getElementById("filter-time");
+        this.elements.filterBtns = document.querySelectorAll(".filter-btn");
+        this.elements.searchInput = document.querySelector(".search-input");
+        this.elements.searchBtn = document.querySelector(".btn-primary");
+        this.elements.resultCount = document.querySelector(".result-count");
+    },
+
+    // --- BIND EVENTS ---
+    bindEvents() {
+        this.bindModalEvents();
+        this.bindSearchAndFilterEvents();
+        this.bindGridEvents();
+    },
+
+    bindModalEvents() {
+        const { modal, closeBtn } = this.elements;
+        if (closeBtn) closeBtn.addEventListener("click", () => this.closeModal());
+        if (modal) window.addEventListener("click", (e) => {
+            if (e.target === modal) this.closeModal();
+        });
+    },
+
+    bindGridEvents() {
+        const handleViewRecipe = (e) => {
+            if (e.target.classList.contains("view-recipe-btn")) {
+                const card = e.target.closest(".food-card");
+                const foodName = card.querySelector(".food-name").innerText.trim();
+                this.showDetails(foodName);
+            }
+        };
+        if (this.elements.foodGrid) this.elements.foodGrid.addEventListener("click", handleViewRecipe);
+        if (this.elements.favoritesGrid) this.elements.favoritesGrid.addEventListener("click", handleViewRecipe);
+    },
+
+    bindSearchAndFilterEvents() {
+        const { difficultySelect, timeSelect, filterBtns, searchBtn, searchInput } = this.elements;
+
+        if (difficultySelect) difficultySelect.addEventListener("change", (e) => {
+            this.currentFilters.difficulty = e.target.value;
+            this.renderFoodCards();
+        });
+
+        if (timeSelect) timeSelect.addEventListener("change", (e) => {
+            this.currentFilters.time = e.target.value;
+            this.renderFoodCards();
+        });
+
+        if (filterBtns) filterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelector(".filter-btn.active")?.classList.remove("active");
+                btn.classList.add("active");
+                this.currentFilters.category = btn.innerText.trim();
+                this.renderFoodCards();
+            });
+        });
+
+        const handleSearch = () => {
+            if (searchInput) {
+                this.currentFilters.search = searchInput.value.trim();
+                this.renderFoodCards();
+            }
+        };
+
+        if (searchBtn) searchBtn.addEventListener("click", handleSearch);
+        if (searchInput) searchInput.addEventListener("keyup", (e) => {
+            if (e.key === "Enter") handleSearch();
+        });
+    },
+
+    // --- LOGIC HIỂN THỊ MODAL (SỬ DỤNG CLASS THAY VÌ STYLE CỨNG) ---
+    showDetails(foodName) {
+        const { modal, modalBody } = this.elements;
+        const recipe = recipesDB[foodName];
+        const foodNames = Object.keys(recipesDB);
+        const foodId = foodNames.indexOf(foodName) + 1;
         
-        modalBody.innerHTML = `
-            <div class="recipe-header">
-                <img src="${recipe.image}" alt="${foodName}" class="recipe-image-large">
-                <h2 class="recipe-title">${foodName}</h2>
-            </div>
-            <div class="recipe-content">
-                <div class="recipe-section">
-                    <h4>🛒 Nguyên Liệu:</h4>
-                    <ul class="recipe-list">${ingredientsHtml}</ul>
-                </div>
-                <div class="recipe-section">
-                    <h4>👩‍🍳 Cách Làm:</h4>
-                    <ol class="recipe-steps">${instructionsHtml}</ol>
-                </div>
-            </div>
-        `;
+        console.log("Đang mở món:", foodName, "| ID:", foodId);
 
-        // SỬA ĐỔI: Thêm logic class 'show' để đồng bộ hiệu ứng với các modal khác
-        modal.style.display = "flex"; 
-        setTimeout(() => {
-            modal.classList.add("show");
-        }, 10);
-        
-        document.body.style.overflow = "hidden";
-    } else {
-        alert("Chưa có công thức cho món này: " + foodName);
-    }
-};
-
-// SỬA ĐỔI: Cập nhật hàm đóng để bỏ class 'show'
-window.closeRecipeModal = function() {
-    const modal = document.getElementById("recipe-modal");
-    if (modal) {
-        modal.classList.remove("show"); // Tắt hiệu ứng trước
-        setTimeout(() => {
-            modal.style.display = "none"; // Ẩn sau khi hiệu ứng chạy xong
-            document.body.style.overflow = "auto";
-        }, 300); // Khớp với thời gian transition trong CSS (thường là 0.3s)
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  // 1. CƠ SỞ DỮ LIỆU CÔNG THỨC
-  
-
-  // 2. CÁC BIẾN DOM
-  // ... (Phần 1: recipesDB giữ nguyên như cũ) ...
-
-  // 2. CÁC BIẾN DOM
-  const foodGrid = document.getElementById("food-grid");
- // const modal = document.getElementById("recipe-modal");
-  const modalBody = document.getElementById("modal-body-content");
-  //const closeBtn = document.querySelector(".close-modal");
-  const resultCount = document.querySelector(".result-count"); // Hiển thị số lượng kết quả
-
-  // Các biến cho bộ lọc
-  const searchInput = document.querySelector(".search-input");
-  const searchBtn = document.querySelector(".btn-primary");
-  const filterBtns = document.querySelectorAll(".filter-btn"); // Các nút danh mục
-  const difficultySelect = document.getElementById("filter-difficulty"); // Select độ khó
-  const timeSelect = document.getElementById("filter-time"); // Select thời gian
-
-  const modal = document.getElementById("recipe-modal");
-    window.addEventListener("click", (e) => {
-        if (e.target == modal) {
-            window.closeRecipeModal();
-        }
-    });
-    
-    // Gán sự kiện cho nút đóng class .close-modal
-    const closeBtn = document.querySelector(".close-modal");
-    if(closeBtn) {
-        closeBtn.addEventListener("click", window.closeRecipeModal);
-    }
-
-  // State: Lưu trạng thái lọc hiện tại
-  let currentFilters = {
-    search: "",
-    category: "Tất cả", // Mặc định hiển thị tất cả
-    difficulty: "all",
-    time: "all"
-  };
-
-  // 3. HÀM XỬ LÝ: Chuyển đổi thời gian từ chuỗi "60 phút" -> số 60
-  function parseTime(timeString) {
-    if (!timeString) return 0;
-    // Lấy tất cả các số trong chuỗi
-    const matches = timeString.match(/(\d+)/);
-    return matches ? parseInt(matches[0]) : 0;
-  }
-
-  // 4. HÀM KIỂM TRA ĐIỀU KIỆN LỌC (Core Logic)
-  function isMatch(foodName, recipe) {
-    // 4.1. Lọc theo tên (Search)
-    const searchTerm = currentFilters.search.toLowerCase();
-    if (searchTerm && !foodName.toLowerCase().includes(searchTerm)) {
-      return false;
-    }
-
-    // 4.2. Lọc theo danh mục (Category)
-    // Nếu không phải "Tất cả" và danh mục không khớp -> loại
-    if (currentFilters.category !== "Tất cả" && recipe.category !== currentFilters.category) {
-      return false;
-    }
-
-    // 4.3. Lọc theo độ khó
-    if (currentFilters.difficulty !== "all" && recipe.difficulty !== currentFilters.difficulty) {
-      return false;
-    }
-
-    // 4.4. Lọc theo thời gian
-    if (currentFilters.time !== "all") {
-      const minutes = parseTime(recipe.time);
-      if (currentFilters.time === "under_30" && minutes >= 30) return false;
-      if (currentFilters.time === "30_60" && (minutes < 30 || minutes > 60)) return false;
-      if (currentFilters.time === "over_60" && minutes <= 60) return false;
-    }
-
-    return true; // Thỏa mãn tất cả điều kiện
-  }
-
-  // 5. HÀM RENDER (HIỂN THỊ) MÓN ĂN
-  function renderFoodCards() {
-    if (!foodGrid) return;
-
-    foodGrid.innerHTML = ""; // Xóa nội dung cũ
-    let count = 0;
-
-    for (let foodName in recipesDB) {
-      const recipe = recipesDB[foodName];
-
-      // Kiểm tra xem món ăn có thỏa mãn bộ lọc không
-      if (isMatch(foodName, recipe)) {
-        count++;
-        
-        // Xử lý dữ liệu thiếu (fallback)
-        const category = recipe.category || "Món Ngon";
-        const time = recipe.time || "30 phút";
-        const difficulty = recipe.difficulty || "Dễ";
-        const description = recipe.description || "Món ăn hấp dẫn cho gia đình.";
-
-        const cardHTML = `
-            <article class="food-card">
-                <div class="image-container">
-                    <img src="${recipe.image}" alt="${foodName}" class="food-image">
-                    <span class="food-category-badge">${category}</span>
-                    <div class="food-favorite"><span>❤️</span></div>
-                </div>
-                <div class="food-content">
-                    <h3 class="food-name">${foodName}</h3>
-                    <p class="food-description">${description}</p>
-                    <div class="food-meta">
-                        <span class="food-time">⏱️ ${time}</span>
-                        <span class="food-difficulty">${difficulty}</span>
+        if (recipe && modal && modalBody) {
+            let ingredientsHtml = recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
+            let instructionsHtml = recipe.instructions.map((step) => `<li>${step}</li>`).join("");
+            
+            // QUAN TRỌNG: Không dùng style="..." cho layout nữa
+            modalBody.innerHTML = `
+                <div class="recipe-detail-layout">
+                    
+                    <div class="recipe-column recipe-col-image">
+                        <img src="${recipe.image}" alt="${foodName}" class="recipe-detail-image">
                     </div>
-                    <button class="view-recipe-btn">Xem Công Thức</button>
-                </div>
-            </article>
-        `;
-        foodGrid.innerHTML += cardHTML;
-      }
-    }
-
-    // Cập nhật số lượng kết quả tìm thấy
-    if (resultCount) {
-      resultCount.innerText = `Hiển thị ${count} món ăn`;
-    }
-    
-    // Hiển thị thông báo nếu không tìm thấy món nào
-    if (count === 0) {
-      foodGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
-        <h3>Không tìm thấy món ăn phù hợp 😢</h3>
-        <p>Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm nhé!</p>
-      </div>`;
-    }
-  }
-
-  // 6. XỬ LÝ SỰ KIỆN (EVENTS)
-  
-  // A. Thay đổi Select Độ khó & Thời gian
-  if (difficultySelect) {
-    difficultySelect.addEventListener("change", (e) => {
-      currentFilters.difficulty = e.target.value;
-      renderFoodCards();
-    });
-  }
-
-  if (timeSelect) {
-    timeSelect.addEventListener("change", (e) => {
-      currentFilters.time = e.target.value;
-      renderFoodCards();
-    });
-  }
-
-  // B. Click nút Danh mục (Món nước, Món mặn...)
-  if (filterBtns) {
-    filterBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        // Xóa class active cũ, thêm vào nút mới được click
-        document.querySelector(".filter-btn.active")?.classList.remove("active");
-        btn.classList.add("active");
-
-        // Lấy tên danh mục từ chữ trên nút (innerText)
-        currentFilters.category = btn.innerText.trim();
-        renderFoodCards();
-      });
-    });
-  }
-
-  // C. Tìm kiếm (Search)
-  const handleSearch = () => {
-    if (searchInput) {
-      currentFilters.search = searchInput.value.trim();
-      renderFoodCards();
-    }
-  };
-
-  if (searchBtn) searchBtn.addEventListener("click", handleSearch);
-  if (searchInput) {
-    searchInput.addEventListener("keyup", (e) => {
-      if (e.key === "Enter") handleSearch();
-    });
-  }
-
-  // D. Mở Modal & Event Delegation
-  // Xử lý click cho cả foodGrid (Trang chủ) và favoritesGrid (Trang yêu thích)
-  const handleRecipeClick = (e) => {
-    if (e.target.classList.contains("view-recipe-btn")) {
-      const card = e.target.closest(".food-card");
-      const foodName = card.querySelector(".food-name").innerText.trim();
-      openModal(foodName);
-    }
-  };
-
-  if (foodGrid) foodGrid.addEventListener("click", handleRecipeClick);
-  const favoritesGrid = document.getElementById("favoritesGrid");
-  if (favoritesGrid) favoritesGrid.addEventListener("click", handleRecipeClick);
-
-
-  // 7. HÀM MODAL (Giữ nguyên logic cũ)
-  function openModal(foodName) {
-    const recipe = recipesDB[foodName];
-    if (recipe) {
-      let ingredientsHtml = recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
-      let instructionsHtml = recipe.instructions.map((step) => `<li>${step}</li>`).join("");
-
-      modalBody.innerHTML = `
-                <div class="recipe-header">
-                    <img src="${recipe.image}" alt="${foodName}" class="recipe-image-large">
-                    <h2 class="recipe-title">${foodName}</h2>
-                </div>
-                <div class="recipe-content">
-                    <div class="recipe-section">
-                        <h4>🛒 Nguyên Liệu:</h4>
-                        <ul class="recipe-list">${ingredientsHtml}</ul>
-                    </div>
-                    <div class="recipe-section">
-                        <h4>👩‍🍳 Cách Làm:</h4>
-                        <ol class="recipe-steps">${instructionsHtml}</ol>
+                    
+                    <div class="recipe-column recipe-col-content">
+                        <h2 class="recipe-title-large">${foodName}</h2>
+                        
+                        <div class="recipe-section ingredients-box">
+                            <h4 class="section-title-small">🛒 Nguyên Liệu:</h4>
+                            <ul class="recipe-list">${ingredientsHtml}</ul>
+                        </div>
+                        
+                        <div class="recipe-section">
+                            <h4 class="section-title-simple">👩‍🍳 Cách Làm:</h4>
+                            <ol class="recipe-steps">${instructionsHtml}</ol>
+                        </div>
                     </div>
                 </div>
             `;
-      modal.style.display = "block";
-      document.body.style.overflow = "hidden";
-    }
-  }
 
-  // Đóng modal
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-    });
-  }
-  
-  window.addEventListener("click", (e) => {
-    if (e.target == modal) {
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-    }
-  });
+            this.handleModalFavoriteBtn(foodId);
 
-  // 8. CHẠY LẦN ĐẦU
-  renderFoodCards();
+            modal.style.display = "flex"; 
+            setTimeout(() => {
+                modal.classList.add("show");
+            }, 10);
+            
+            document.body.style.overflow = "hidden";
+        } else {
+            alert("Chưa có công thức cho món này: " + foodName);
+        }
+    },
+
+    closeModal() {
+        const { modal } = this.elements;
+        if (modal) {
+            modal.classList.remove("show");
+            setTimeout(() => {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }, 300);
+        }
+    },
+
+    // --- LOGIC NÚT YÊU THÍCH ---
+    handleModalFavoriteBtn(foodId) {
+        const oldBtn = document.querySelector("#recipe-modal .food-favorite");
+        if (oldBtn) {
+            const newBtn = oldBtn.cloneNode(true);
+            oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            const isFavorite = favorites.includes(foodId);
+
+            if (isFavorite) {
+                newBtn.classList.add("favorited");
+                newBtn.style.background = "#ff6b6b"; 
+            } else {
+                newBtn.classList.remove("favorited");
+                newBtn.style.background = "var(--white)";
+            }
+
+            newBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+                const index = favorites.indexOf(foodId);
+
+                if (index > -1) {
+                    favorites.splice(index, 1);
+                    this.classList.remove("favorited");
+                    this.style.background = "var(--white)";
+                } else {
+                    favorites.push(foodId);
+                    this.classList.add("favorited");
+                    this.style.background = "#ff6b6b";
+                }
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                window.dispatchEvent(new CustomEvent('favoritesUpdated'));
+                window.dispatchEvent(new Event('storage'));
+            });
+        }
+    },
+
+    // --- LOGIC RENDER & FILTER (Dành cho trang chủ) ---
+    parseTime(timeString) {
+        if (!timeString) return 0;
+        const matches = timeString.match(/(\d+)/);
+        return matches ? parseInt(matches[0]) : 0;
+    },
+
+    isMatch(foodName, recipe) {
+        const searchTerm = this.currentFilters.search.toLowerCase();
+        if (searchTerm && !foodName.toLowerCase().includes(searchTerm)) {
+            return false;
+        }
+        if (this.currentFilters.category !== "Tất cả" && recipe.category !== this.currentFilters.category) {
+            return false;
+        }
+        if (this.currentFilters.difficulty !== "all" && recipe.difficulty !== this.currentFilters.difficulty) {
+            return false;
+        }
+        if (this.currentFilters.time !== "all") {
+            const minutes = this.parseTime(recipe.time);
+            if (this.currentFilters.time === "under_30" && minutes >= 30) return false;
+            if (this.currentFilters.time === "30_60" && (minutes < 30 || minutes > 60)) return false;
+            if (this.currentFilters.time === "over_60" && minutes <= 60) return false;
+        }
+        return true;
+    },
+
+    renderFoodCards() {
+        const { foodGrid, resultCount } = this.elements;
+        if (!foodGrid) return;
+
+        foodGrid.innerHTML = "";
+        let count = 0;
+        
+        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        const foodNames = Object.keys(recipesDB);
+
+        for (let foodName in recipesDB) {
+            const recipe = recipesDB[foodName];
+
+            if (this.isMatch(foodName, recipe)) {
+                count++;
+                
+                const foodId = foodNames.indexOf(foodName) + 1;
+                const isFav = favorites.includes(foodId);
+                const heartStyle = isFav ? 'style="background: #ff6b6b;"' : '';
+                const heartClass = isFav ? 'favorited' : '';
+
+                const cardHTML = `
+                    <article class="food-card">
+                        <div class="image-container">
+                            <img src="${recipe.image}" alt="${foodName}" class="food-image">
+                            <span class="food-category-badge">${recipe.category || "Món Ngon"}</span>
+                            <div class="food-favorite ${heartClass}" ${heartStyle}><span>❤️</span></div>
+                        </div>
+                        <div class="food-content">
+                            <h3 class="food-name">${foodName}</h3>
+                            <p class="food-description">${recipe.description || "Món ăn hấp dẫn."}</p>
+                            <div class="food-meta">
+                                <span class="food-time">⏱️ ${recipe.time || "30 phút"}</span>
+                                <span class="food-difficulty">${recipe.difficulty || "Dễ"}</span>
+                            </div>
+                            <button class="view-recipe-btn">Xem Công Thức</button>
+                        </div>
+                    </article>
+                `;
+                foodGrid.innerHTML += cardHTML;
+            }
+        }
+
+        if (resultCount) {
+            resultCount.innerText = `Hiển thị ${count} món ăn`;
+        }
+        
+        if (count === 0) {
+            foodGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                <h3>Không tìm thấy món ăn phù hợp 😢</h3>
+                <p>Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm nhé!</p>
+            </div>`;
+        }
+    }
+};
+
+// ==========================================================================
+// 3. KHỞI TẠO ỨNG DỤNG
+// ==========================================================================
+document.addEventListener("DOMContentLoaded", () => {
+    RecipeManager.init();
 });
+
+// Export hàm global để hỗ trợ các trường hợp gọi trực tiếp (nếu có)
+window.showRecipeDetails = (name) => RecipeManager.showDetails(name);
+window.closeRecipeModal = () => RecipeManager.closeModal();

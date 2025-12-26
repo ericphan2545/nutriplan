@@ -89,12 +89,18 @@
     </button>
 
     <div id="recipe-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="modal-body-content">
-                </div>
-        </div>
+    <div class="modal-content" style="position: relative;"> 
+        
+        <div class="food-favorite modal-btn favorite-btn" style="background: var(--white);"><span>❤️</span></div>
+        
+        <button class="modal-btn close-modal" title="Đóng">
+            <span>&times;</span>
+        </button>
+
+        <div id="modal-body-content">
+            </div>
     </div>
+</div>
 
     <script src="js/nav-indicator.js"></script>
     <script type="module" src="js/theme.js"></script>

@@ -987,3 +987,187 @@ h1, h2, h3 {
     background: var(--primary-light);
     transform: translateY(-2px);
 }
+/* =========================================
+   BMI RESULT CARD STYLES (MODERN DASHBOARD)
+   ========================================= */
+
+.bmi-result-card {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: 24px;
+    background-color: var(--card-bg, #fff); /* Tự động theo theme */
+    box-shadow: var(--shadow-lg, 0 10px 30px rgba(0,0,0,0.1));
+    border: 1px solid var(--border-color, transparent);
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* --- CỘT TRÁI: ĐIỂM SỐ BMI --- */
+.bmi-overview {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--border-color, #eee);
+    padding-right: 2rem;
+}
+
+.bmi-card-title {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.bmi-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    /* Gradient xanh đẹp mắt */
+    background: linear-gradient(135deg, var(--primary-green), var(--mint-green));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+    position: relative;
+}
+
+.bmi-score {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.bmi-unit {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.bmi-status-text {
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    text-align: center;
+}
+/* Dark Mode cho chữ trạng thái */
+[data-theme="dark"] .bmi-status-text {
+    color: var(--mint-green);
+}
+
+/* --- CỘT PHẢI: CÁC CHỈ SỐ CHI TIẾT --- */
+.bmi-details-grid {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    background-color: var(--bg-secondary, #f8f9fa); /* Màu nền box con */
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateX(5px);
+}
+
+/* Dark Mode cho các box con */
+[data-theme="dark"] .stat-item {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.stat-icon {
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    background-color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+[data-theme="dark"] .stat-icon {
+    background-color: var(--bg-tertiary);
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-unit {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-left: 4px;
+    font-weight: 400;
+}
+
+/* --- HIGHLIGHT ITEM (Mục tiêu Calo) --- */
+.highlight-item {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 87, 34, 0.1));
+    border: 1px solid rgba(255, 152, 0, 0.3);
+}
+[data-theme="dark"] .highlight-item {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 87, 34, 0.15));
+    border: 1px solid rgba(255, 152, 0, 0.5);
+}
+
+.stat-value-large {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #e65100; /* Màu cam đậm */
+}
+[data-theme="dark"] .stat-value-large {
+    color: #ff9800; /* Màu cam sáng */
+}
+
+/* --- RESPONSIVE (Mobile) --- */
+@media (max-width: 768px) {
+    .bmi-result-card {
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .bmi-overview {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color, #eee);
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+    }
+
+    .bmi-circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .bmi-score {
+        font-size: 2.5rem;
+    }
+}

@@ -185,90 +185,144 @@ const MealPlanner = {
   },
 
   // ===== BMI CALCULATION =====
+  // --- TÍNH TOÁN BMI & TDEE (Đã cập nhật cho giao diện mới) ---
   calculateBMI() {
-    const age = parseInt(document.getElementById("age").value);
-    const height = parseInt(document.getElementById("height").value);
-    const weight = parseInt(document.getElementById("weight").value);
+    // 1. Lấy dữ liệu từ Input
+    const ageInput = document.getElementById("age");
+    const heightInput = document.getElementById("height");
+    const weightInput = document.getElementById("weight");
 
-    if (
-      !this.userData.gender ||
-      !age ||
-      !height ||
-      !weight ||
-      !this.userData.activityLevel
-    ) {
-      alert("Vui lòng điền đầy đủ thông tin!");
+    const age = parseInt(ageInput.value);
+    const height = parseInt(heightInput.value);
+    const weight = parseInt(weightInput.value);
+
+    // 2. Kiểm tra dữ liệu đầu vào
+    if (!this.userData.gender || !this.userData.activityLevel || !age || !height || !weight) {
+      // Nếu thiếu thông tin, hiện popup cảnh báo (dùng hàm bạn vừa sửa)
+      this.openWarningModal(); 
       return;
     }
 
+    // Cập nhật vào userData
     this.userData.age = age;
     this.userData.height = height;
     this.userData.weight = weight;
 
-    // Calculate BMI
-    const heightM = height / 100;
-    const bmi = weight / (heightM * heightM);
-    this.userData.bmi = bmi.toFixed(1);
+    // 3. Tính BMI
+    // BMI = Cân nặng (kg) / (Chiều cao (m) * Chiều cao (m))
+    const heightInMeters = height / 100;
+    const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+    this.userData.bmi = bmi;
 
-    // Calculate BMR (Mifflin-St Jeor)
-    let bmr;
+    // Xác định phân loại BMI
+    let category = "";
+    let colorClass = ""; // Có thể dùng để đổi màu chữ nếu muốn
+    if (bmi < 18.5) category = "Thiếu cân";
+    else if (bmi < 24.9) category = "Bình thường";
+    else if (bmi < 29.9) category = "Thừa cân";
+    else category = "Béo phì";
+
+    // 4. Tính BMR (Mifflin-St Jeor)
+    let bmr = 0;
     if (this.userData.gender === "male") {
       bmr = 10 * weight + 6.25 * height - 5 * age + 5;
     } else {
       bmr = 10 * weight + 6.25 * height - 5 * age - 161;
     }
 
-    // Calculate TDEE
+    // 5. Tính TDEE & Target Calories
+    // Activity Multipliers: 1.2, 1.375, 1.55, 1.725
     const activityMultipliers = {
       sedentary: 1.2,
       light: 1.375,
       moderate: 1.55,
       active: 1.725,
     };
-    const tdee = Math.round(
-      bmr * activityMultipliers[this.userData.activityLevel]
-    );
+    
+    const multiplier = activityMultipliers[this.userData.activityLevel] || 1.2;
+    const tdee = Math.round(bmr * multiplier);
+    
+    // Mục tiêu: Giảm cân nhẹ (TDEE - 300) hoặc giữ cân (TDEE)
+    // Ở đây để mặc định là giữ cân hoặc giảm nhẹ tuỳ logic bạn muốn. 
+    // Ví dụ: Giảm 10% để healthy
+    const targetCalories = Math.round(tdee * 0.9); 
+
     this.userData.tdee = tdee;
+    this.userData.targetCalories = targetCalories;
 
-    // Calculate target calories
-    let targetCalories;
-    if (bmi < 18.5) targetCalories = tdee + 300;
-    else if (bmi < 24.9) targetCalories = tdee;
-    else if (bmi < 29.9) targetCalories = tdee - 300;
-    else targetCalories = tdee - 500;
+    // 6. HIỂN THỊ KẾT QUẢ RA GIAO DIỆN MỚI
+    const bmiValueEl = document.getElementById("bmiValue");
+    const bmiCategoryEl = document.getElementById("bmiCategory");
+    const bmrValueEl = document.getElementById("bmrValue");
+    const tdeeValueEl = document.getElementById("tdeeValue");
+    const targetCaloriesEl = document.getElementById("targetCalories");
+    const resultCard = document.getElementById("bmiResult");
 
-    this.userData.targetCalories = Math.round(targetCalories);
+    if (bmiValueEl) bmiValueEl.innerText = bmi;
+    if (bmiCategoryEl) bmiCategoryEl.innerText = category;
+    
+    // Format số có dấu phẩy (ví dụ: 1,500)
+    if (bmrValueEl) bmrValueEl.innerText = bmr.toLocaleString();
+    if (tdeeValueEl) tdeeValueEl.innerText = tdee.toLocaleString();
+    if (targetCaloriesEl) targetCaloriesEl.innerText = targetCalories.toLocaleString();
 
-    // Update UI
-    this.displayBMIResult();
+    // Hiển thị thẻ kết quả (QUAN TRỌNG: display flex để giữ layout ngang)
+    if (resultCard) {
+      resultCard.style.display = "flex";
+      // Cuộn xuống để người dùng thấy kết quả trên mobile
+      resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    // Lưu dữ liệu
     this.updateNutritionTargets();
     this.saveData();
-
-    // Không đóng modal ngay để người dùng xem kết quả BMI
-    // alert("Đã cập nhật chỉ số!");
   },
 
   displayBMIResult() {
+    // 1. Kiểm tra dữ liệu
+    if (!this.userData.bmi) return;
+
+    // 2. Cập nhật các số liệu (Dùng đúng ID trong HTML mới)
+    const elements = {
+      "bmiValue": this.userData.bmi,
+      "tdeeValue": this.userData.tdee ? this.userData.tdee.toLocaleString() : 0,
+      "targetCalories": this.userData.targetCalories ? this.userData.targetCalories.toLocaleString() : 0
+    };
+
+    // Vòng lặp gán giá trị tránh lỗi null
+    for (const [id, value] of Object.entries(elements)) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    // 3. Tính toán và hiển thị lại Category (Phân loại)
     const bmi = parseFloat(this.userData.bmi);
-    document.getElementById("bmiNumber").textContent = this.userData.bmi;
-    document.getElementById("tdeeValue").textContent = this.userData.tdee;
-    document.getElementById("targetCalories").textContent =
-      this.userData.targetCalories;
+    let category = "";
+    if (bmi < 18.5) category = "Thiếu cân";
+    else if (bmi < 24.9) category = "Bình thường";
+    else if (bmi < 29.9) category = "Thừa cân";
+    else category = "Béo phì";
 
-    let status;
-    if (bmi < 18.5) status = "Thiếu cân";
-    else if (bmi < 24.9) status = "Bình thường";
-    else if (bmi < 29.9) status = "Thừa cân";
-    else status = "Béo phì";
-    document.getElementById("bmiStatus").textContent = status;
+    const categoryEl = document.getElementById("bmiCategory");
+    if (categoryEl) categoryEl.textContent = category;
 
-    let pointerPosition;
-    if (bmi < 16) pointerPosition = 5;
-    else if (bmi > 35) pointerPosition = 95;
-    else pointerPosition = ((bmi - 16) / (35 - 16)) * 100;
-    document.getElementById("bmiPointer").style.left = `${pointerPosition}%`;
+    // 4. Tính lại và hiển thị BMR (vì BMR không được lưu trong database nên cần tính lại để hiển thị)
+    if (this.userData.weight && this.userData.height && this.userData.age && this.userData.gender) {
+        let bmr = 0;
+        if (this.userData.gender === "male") {
+            bmr = 10 * this.userData.weight + 6.25 * this.userData.height - 5 * this.userData.age + 5;
+        } else {
+            bmr = 10 * this.userData.weight + 6.25 * this.userData.height - 5 * this.userData.age - 161;
+        }
+        const bmrEl = document.getElementById("bmrValue");
+        if (bmrEl) bmrEl.textContent = Math.round(bmr).toLocaleString();
+    }
 
-    document.getElementById("bmiResult").classList.add("show");
+    // 5. Hiển thị khung kết quả
+    const resultCard = document.getElementById("bmiResult");
+    if (resultCard) {
+      resultCard.style.display = "flex"; // Bắt buộc dùng flex để không bị vỡ giao diện
+    }
   },
 
   updateNutritionTargets() {
