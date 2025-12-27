@@ -1497,3 +1497,47 @@
     0% { transform: scale(0); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
 }
+/* --- Thêm vào cuối file css/components.css --- */
+
+/* Style bổ sung cho Modal Header (mang từ meal-planner sang) */
+.modal {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    animation: fadeInUp 0.3s ease forwards;
+}
+
+.modal-header {
+    background: var(--white);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Hiệu ứng hover cho nút đóng trong header */
+.modal-close:hover {
+    background-color: #ffebee; /* Màu đỏ nhạt */
+    color: #d32f2f;
+}
+
+/* Hiệu ứng hover cho nút tim trong header */
+.modal-header .food-favorite:hover {
+    background-color: #ffebee;
+    transform: scale(1.1);
+}
+
+/* Dark Mode Support cho Modal mới (nếu bạn dùng theme.js) */
+[data-theme="dark"] .modal,
+[data-theme="dark"] .modal-header {
+    background: var(--card-bg, #16213e);
+    border-color: var(--border-color, #2d4a3e);
+}
+
+[data-theme="dark"] .modal-title {
+    color: var(--mint-green);
+}
+
+[data-theme="dark"] .modal-header .food-favorite {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}

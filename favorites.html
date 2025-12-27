@@ -88,16 +88,24 @@
         <span class="icon-dark">☀️</span>
     </button>
 
-    <div id="recipe-modal" class="modal-overlay">
-    <div class="modal-content" style="position: relative;"> 
+    <div id="recipe-modal" class="modal-overlay" style="display: none; z-index: 2000;">
+    <div class="modal" style="max-width: 800px; width: 90%; margin: 2rem auto; max-height: 90vh; display: flex; flex-direction: column; background: var(--white); border-radius: 16px; position: relative;">
         
-        <div class="food-favorite modal-btn favorite-btn" style="background: var(--white);"><span>❤️</span></div>
-        
-        <button class="modal-btn close-modal" title="Đóng">
-            <span>&times;</span>
-        </button>
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 1px solid var(--bg-sage, #eee);">
+            <h3 class="modal-title" style="font-size: 1.5rem; color: var(--primary-green); margin: 0; font-family: var(--font-heading);">Chi tiết công thức</h3>
+            
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="food-favorite favorite-btn" style="position: static; width: 36px; height: 36px; box-shadow: none; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer;">
+                    <span>❤️</span>
+                </div>
+                
+                <button class="modal-close" onclick="closeRecipeModal()" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+                    ✕
+                </button>
+            </div>
+        </div>
 
-        <div id="modal-body-content">
+        <div class="modal-body" id="modal-body-content" style="padding: 1.5rem; overflow-y: auto;">
             </div>
     </div>
 </div>
