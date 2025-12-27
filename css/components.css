@@ -122,6 +122,11 @@
     box-shadow: 0 8px 25px var(--shadow);
 }
 
+.btn.btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
 .btn-primary:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -350,9 +355,6 @@
     transform: scale(1.1);
 }
 
-.food-favorite:hover span {
-    filter: brightness(0) invert(1);
-}
 
 .food-favorite.favorited {
     background: #ff6b6b !important;
@@ -360,6 +362,10 @@
 
 .food-favorite.favorited span {
     filter: brightness(0) invert(1);
+}
+
+.food-favorite:active {
+    transform: scale(1.4);
 }
 
 .food-content {
@@ -443,8 +449,12 @@
 }
 
 .view-recipe-btn:hover {
-    box-shadow: 0 6px 20px var(--shadow);
-    transform: translateY(-2px);
+    transform: translateY(-3px); /* Bay lên nhẹ */
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5); /* Phát sáng mạnh hơn */
+}
+
+.view-recipe-btn:active {
+    transform: translateY(4px);
 }
 
 /* ===== SECTION TITLE ===== */
@@ -949,6 +959,11 @@
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+.view-recipe-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 
 /* ===== RESPONSIVE COMPONENTS ===== */
