@@ -351,7 +351,6 @@
 }
 
 .food-favorite:hover {
-    background: #ff6b6b !important;
     transform: scale(1.1);
 }
 
