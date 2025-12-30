@@ -15,9 +15,8 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/meal-planner.css" />
     <link rel="stylesheet" href="css/components.css" />
-    
+    <link rel="stylesheet" href="css/meal-planner.css" />
 
   </head>
   <body>
@@ -25,10 +24,10 @@
 
     <header class="header">
         <div class="header-content">
-            <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
+            <div class="logo">
                 <div class="logo-icon">🍳</div>
                 <h1>Food<span>Library</span></h1>
-            </a>
+            </div>
             
             <nav class="nav">
                 <ul>
@@ -38,7 +37,9 @@
                 </ul>
             </nav>
 
-            
+            <button class="btn-settings" onclick="openSettingsModal()" style="margin-left: 1rem; padding: 0.5rem 1rem; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer; font-weight: 600;">
+                <span>⚙️</span> Cài đặt
+            </button>
         </div>
     </header>
 
@@ -47,9 +48,6 @@
         <div class="content-header">
           <h2 class="page-title">🗓️ Thực Đơn Tuần</h2>
           <div class="week-navigation">
-            <button class="btn-settings" onclick="openSettingsModal()" style="margin-left: 1rem; padding: 0.5rem 1rem; border-radius: 20px; background: var(--light-green); border: 1px solid var(--border-color); cursor: pointer; font-weight: 600;">
-                <span>⚙️</span> Chỉnh thông tin cơ thể & BMI
-            </button>
             <button class="week-nav-btn" onclick="previousWeek()">◀</button>
             <span class="current-week" id="currentWeek">Tuần 1</span>
             <button class="week-nav-btn" onclick="nextWeek()">▶</button>
@@ -170,49 +168,23 @@
                     <button class="calculate-btn" onclick="calculateBMI()">
                       <span>✨</span> Tính toán & Lưu
                     </button>
-          
-                    <div id="bmiResult" class="bmi-result-card" style="display: none;">
-    
-    <div class="bmi-overview">
-        <h3 class="bmi-card-title">Chỉ Số BMI Của Bạn</h3>
-        <div class="bmi-circle-container">
-            <div class="bmi-circle">
-                <span id="bmiValue" class="bmi-score">0.0</span>
-                <span class="bmi-unit">BMI</span>
-            </div>
-            <p id="bmiCategory" class="bmi-status-text">Đang tính toán...</p>
-        </div>
-    </div>
-
-    <div class="bmi-details-grid">
-        <div class="stat-item">
-            <div class="stat-icon">🔥</div>
-            <div class="stat-info">
-                <span class="stat-label">BMR (Trao đổi chất)</span>
-                <span id="bmrValue" class="stat-value">0</span>
-                <span class="stat-unit">kcal/ngày</span>
-            </div>
-        </div>
-
-        <div class="stat-item">
-            <div class="stat-icon">⚡</div>
-            <div class="stat-info">
-                <span class="stat-label">TDEE (Tiêu thụ)</span>
-                <span id="tdeeValue" class="stat-value">0</span>
-                <span class="stat-unit">kcal/ngày</span>
-            </div>
-        </div>
-
-        <div class="stat-item highlight-item">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-info">
-                <span class="stat-label">Mục Tiêu Ăn Uống</span>
-                <span id="targetCalories" class="stat-value-large">0</span>
-                <span class="stat-unit">kcal/ngày</span>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="bmi-result-card" id="bmiResult">
+                      <div class="bmi-value-display">
+                        <div class="bmi-number" id="bmiNumber">--</div>
+                        <div class="bmi-status-text" id="bmiStatus">Chỉ số BMI</div>
+                      </div>
+                      <div class="bmi-scale-bar">
+                        <div class="bmi-scale-pointer" id="bmiPointer"></div>
+                      </div>
+                      <div class="calories-info">
+                        <div class="calorie-item">
+                          <div class="value" id="tdeeValue">--</div> <div class="label">TDEE</div>
+                        </div>
+                        <div class="calorie-item">
+                          <div class="value" id="targetCalories">--</div> <div class="label">Mục tiêu</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
             </div>
         </div>
@@ -238,45 +210,14 @@
       </div>
     </div>
 
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <span class="icon-light">🌙</span>
-        <span class="icon-dark">☀️</span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <span class="icon-light">🌙</span>
+      <span class="icon-dark">☀️</span>
     </button>
 
-    <div id="recipe-modal" class="modal-overlay" style="display: none; z-index: 2000;">
-        <div class="modal" style="max-width: 800px; width: 90%; margin: 2rem auto; max-height: 90vh; overflow-y: auto;">
-            <div class="modal-header">
-                <h3 class="modal-title">Chi tiết công thức</h3>
-                <button class="modal-close" onclick="closeRecipeModal()">✕</button>
-            </div>
-            <div class="modal-body" id="modal-body-content">
-                </div>
-        </div>
-    </div>
-    <div class="modal-overlay" id="warningModal" style="display: none;">
-    <div class="modal modal-warning">
-        <div class="modal-header warning-header">
-            <div class="warning-icon">⚠️</div>
-        </div>
-        <div class="modal-body warning-body">
-            <h3 class="modal-title warning-title">Chưa có thông tin cơ thể</h3>
-            <p class="warning-text">
-                Bạn cần cập nhật chỉ số cơ thể (BMI/TDEE) trước khi để hệ thống tự động tạo thực đơn. Bạn có muốn mở cài đặt ngay không?
-            </p>
-            
-            <div class="modal-actions warning-actions">
-                <button class="btn-cancel" onclick="closeWarningModal()">Để sau</button>
-                <button class="btn-confirm" onclick="confirmOpenSettings()">
-                    <span>⚙️</span> Mở cài đặt
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
     <script src="js/nav-indicator.js"></script>
     <script type="module" src="js/theme.js"></script>
     <script src="js/food-database.js"></script>
-    <script src="js/recipes.js"></script>
     <script src="js/meal-planner.js"></script>
   </body>
 </html>
