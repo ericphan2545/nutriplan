@@ -1227,13 +1227,13 @@ const Favorites = {
     if (favoriteFoods.length === 0) {
       grid.style.display = "none";
       emptyState.style.display = "block";
-      resultCount.textContent = "Chưa có món ăn nào được yêu thích";
+      resultCount.textContent = "";
       return;
     }
 
     grid.style.display = "grid";
     emptyState.style.display = "none";
-    resultCount.textContent = `Hiển thị ${favoriteFoods.length} món ăn yêu thích`;
+    resultCount.textContent = ``;
 
     grid.innerHTML = favoriteFoods
       .map((food) => {

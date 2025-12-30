@@ -8,6 +8,8 @@
     min-height: 100vh;
 }
 
+
+
 .bg-pattern::before {
     content: '';
     position: fixed;
@@ -16,9 +18,9 @@
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 20% 80%, var(--color-green-900) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, var(--color-green-800) 0%, transparent 40%),
-        radial-gradient(circle at 40% 40%, rgba(129, 199, 132, 0.2) 0%, transparent 30%);
+        radial-gradient(circle at 20% 80%, var(--color-green-800) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--color-green-700) 0%, transparent 40%),
+        radial-gradient(circle at 40% 40%, rgba(226, 245, 227, 0.2) 0%, transparent 30%);
     pointer-events: none;
     z-index: -1;
 }
