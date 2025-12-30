@@ -417,7 +417,7 @@ const MealPlanner = {
                 <div class="meal-slot-content">
                     <span class="meal-emoji">${mealData.emoji || '🥘'}</span>
                     <div>
-                        <div class="meal-name" style="font-weight:600; font-size: 0.9rem;">${mealData.name}</div>
+                        <div class="meal-name" style="font-weight:600; font-size: 0.7rem;">${mealData.name}</div>
                         <div class="meal-calories" style="font-size: 0.8rem; color: var(--text-muted);">${mealData.calories} kcal</div>
                     </div>
                 </div>

@@ -1140,7 +1140,7 @@ h1, h2, h3 {
 .stat-value {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--color-black);
 }
 
 .stat-unit {
@@ -1383,8 +1383,8 @@ h1, h2, h3 {
     transition: all 0.3s ease;
     
     /* Màu sắc: Nền xanh nhạt, chữ xanh đậm */
-    background-color: var(--soft-green); 
-    color: var(--primary-green);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: var(--color-white);
     border: 1px solid transparent;
 }
 

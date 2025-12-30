@@ -860,7 +860,7 @@
 
 .footer-section p,
 .footer-section a {
-    color: var(--pale-green);
+    color: var(--dark-text);
     text-decoration: none;
     line-height: 2;
     display: block;
